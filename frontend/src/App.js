@@ -201,8 +201,8 @@ const STORE_ITEMS = [
   {
     id: "secret_agent_skin",
     name: "Secret Agent Skin",
-    description: "Transform into a professional operative with sleek dark theme, fedora hat, and sunglasses",
-    price: 0.99,
+    description: "Transform into a clandestine operative with shadowy dark theme and stealth aesthetics",
+    price: 1.49,
     type: "cosmetic",
     icon: Crown
   },
@@ -210,7 +210,7 @@ const STORE_ITEMS = [
     id: "moon_man_skin",
     name: "Moon Man Skin", 
     description: "Embrace the lunar conspiracy with cosmic theme, visible moon surface, shooting stars, and planets",
-    price: 0.99,
+    price: 2.99,
     type: "cosmetic",
     icon: Moon
   },
@@ -218,7 +218,7 @@ const STORE_ITEMS = [
     id: "evidence_boost",
     name: "2x Evidence Boost",
     description: "Double evidence gain for 24 hours",
-    price: 1.99,
+    price: 2.99,
     type: "boost",
     duration: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
     icon: Zap
@@ -226,8 +226,8 @@ const STORE_ITEMS = [
   {
     id: "premium_version",
     name: "Premium Version",
-    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree + Realistic UFO button with galaxy background",
-    price: 4.99,
+    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree + Alien face button with galaxy background and flying UFOs",
+    price: 6.99,
     type: "premium",
     icon: Star
   }
@@ -490,7 +490,7 @@ function App() {
         case "cosmetic":
           if (itemId === "secret_agent_skin") {
             setCurrentSkin("secret_agent");
-            toast(`🎨 ${item.name} purchased! Professional operative mode activated!`);
+            toast(`🎨 ${item.name} purchased! Clandestine operative mode activated!`);
           } else if (itemId === "moon_man_skin") {
             setCurrentSkin("moon_man");
             toast(`🌙 ${item.name} purchased! Lunar conspiracy mode activated!`);
@@ -572,7 +572,7 @@ function App() {
     }
     
     if (purchases.premium_version) {
-      skins.push({ value: "alien", label: "Alien Commander", icon: "🛸" });
+      skins.push({ value: "alien", label: "Alien Commander", icon: "👽" });
     }
     
     return skins;
@@ -595,9 +595,12 @@ function App() {
         {/* Alien background effects */}
         {currentSkin === "alien" && (
           <>
-            <div className="galaxy-swirl"></div>
-            <div className="nebula nebula-1"></div>
-            <div className="nebula nebula-2"></div>
+            <div className="galaxy-spiral"></div>
+            <div className="galaxy-arms"></div>
+            <div className="nebula-cloud nebula-cloud-1"></div>
+            <div className="nebula-cloud nebula-cloud-2"></div>
+            <div className="nebula-cloud nebula-cloud-3"></div>
+            <div className="flying-ufo"></div>
           </>
         )}
       </div>
@@ -817,8 +820,9 @@ function App() {
                   {/* Theme-specific decorations */}
                   {currentSkin === "secret_agent" && (
                     <>
-                      <div className="agent-hat"></div>
-                      <div className="agent-glasses"></div>
+                      <div className="clandestine-overlay"></div>
+                      <div className="stealth-scanner"></div>
+                      <div className="shadow-grid"></div>
                     </>
                   )}
                   
@@ -831,10 +835,9 @@ function App() {
                   
                   {currentSkin === "alien" && (
                     <>
-                      <div className="ufo-main-body"></div>
-                      <div className="ufo-dome-top"></div>
-                      <div className="ufo-lights"></div>
-                      <div className="ufo-tractor-beam"></div>
+                      <div className="alien-face"></div>
+                      <div className="alien-eyes"></div>
+                      <div className="alien-glow"></div>
                     </>
                   )}
                 </div>
