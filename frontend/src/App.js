@@ -91,7 +91,7 @@ const UPGRADES = [
   },
   {
     id: "ufo_network",
-    name: "UFO Network",
+    name: "UFO Network", 
     description: "PREMIUM: Galactic surveillance system (+15 evidence/sec)",
     baseCost: 500000,
     clickBonus: 0,
