@@ -224,10 +224,23 @@ function App() {
     const owned = upgrades[upgradeId] || 0;
     const cost = Math.floor(upgrade.baseCost * Math.pow(1.15, owned));
     
+    console.log(`Attempting to buy ${upgrade.name}, cost: ${cost}, current evidence: ${evidence}`);
+    
     if (evidence >= cost) {
-      setEvidence(prev => prev - cost);
-      setUpgrades(prev => ({ ...prev, [upgradeId]: owned + 1 }));
+      setEvidence(prev => {
+        const newEvidence = prev - cost;
+        console.log(`Evidence after purchase: ${newEvidence}`);
+        return newEvidence;
+      });
+      setUpgrades(prev => {
+        const newUpgrades = { ...prev, [upgradeId]: owned + 1 };
+        console.log(`New upgrades:`, newUpgrades);
+        return newUpgrades;
+      });
       toast(`Purchased ${upgrade.name}!`);
+    } else {
+      console.log(`Cannot afford ${upgrade.name}. Need ${cost}, have ${evidence}`);
+      toast(`Not enough evidence! Need ${formatNumber(cost)} evidence.`);
     }
   };
 
