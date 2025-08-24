@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star, Crown, ShoppingCart, Sparkles, Bot, Moon, Scroll } from "lucide-react";
+import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star, Crown, ShoppingCart, Sparkles, Bot, Moon, Scroll, Palette } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
 import { Progress } from "./components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
 import { toast } from "sonner";
 import { Toaster } from "./components/ui/sonner";
 
@@ -208,7 +209,7 @@ const STORE_ITEMS = [
   {
     id: "moon_man_skin",
     name: "Moon Man Skin", 
-    description: "Embrace the lunar conspiracy with cosmic silver theme and starry background",
+    description: "Embrace the lunar conspiracy with cosmic theme, visible moon surface, shooting stars, and planets",
     price: 0.99,
     type: "cosmetic",
     icon: Moon
@@ -225,7 +226,7 @@ const STORE_ITEMS = [
   {
     id: "premium_version",
     name: "Premium Version",
-    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree + Bright green alien theme with UFO button",
+    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree + Realistic UFO button with galaxy background",
     price: 4.99,
     type: "premium",
     icon: Star
@@ -511,6 +512,13 @@ function App() {
     }, 1500);
   };
 
+  const changeSkin = (skinId) => {
+    setCurrentSkin(skinId);
+    toast(`Theme changed to ${skinId === "default" ? "Default" : 
+           skinId === "secret_agent" ? "Secret Agent" :
+           skinId === "moon_man" ? "Moon Man" : "Alien Commander"}!`);
+  };
+
   const getUpgradeCost = (upgradeId) => {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
     const owned = upgrades[upgradeId] || 0;
@@ -551,8 +559,49 @@ function App() {
     return CONSPIRACY_STORIES.filter(story => story.level === level);
   };
 
+  // Get available skins for selector
+  const getAvailableSkins = () => {
+    let skins = [{ value: "default", label: "Default Theme", icon: "🔍" }];
+    
+    if (purchases.secret_agent_skin) {
+      skins.push({ value: "secret_agent", label: "Secret Agent", icon: "🕵️" });
+    }
+    
+    if (purchases.moon_man_skin) {
+      skins.push({ value: "moon_man", label: "Moon Man", icon: "🌙" });
+    }
+    
+    if (purchases.premium_version) {
+      skins.push({ value: "alien", label: "Alien Commander", icon: "🛸" });
+    }
+    
+    return skins;
+  };
+
   return (
     <div className={`conspiracy-game ${getSkinClass()}`}>
+      <div className="background-effects">
+        {/* Moon Man background effects */}
+        {currentSkin === "moon_man" && (
+          <>
+            <div className="shooting-star"></div>
+            <div className="shooting-star shooting-star-2"></div>
+            <div className="planet planet-1"></div>
+            <div className="planet planet-2"></div>
+            <div className="planet planet-3"></div>
+          </>
+        )}
+        
+        {/* Alien background effects */}
+        {currentSkin === "alien" && (
+          <>
+            <div className="galaxy-swirl"></div>
+            <div className="nebula nebula-1"></div>
+            <div className="nebula nebula-2"></div>
+          </>
+        )}
+      </div>
+      
       <Toaster 
         position="top-right"
         toastOptions={{
@@ -579,6 +628,28 @@ function App() {
                    currentSkin === "moon_man" ? "Moon Man Mode" :
                    currentSkin === "alien" ? "Alien Commander Mode" : ""}
                 </Badge>
+              )}
+              
+              {/* Skin Selector */}
+              {getAvailableSkins().length > 1 && (
+                <div className="skin-selector">
+                  <Select value={currentSkin} onValueChange={changeSkin}>
+                    <SelectTrigger className="skin-select-trigger">
+                      <Palette className="palette-icon" />
+                      <SelectValue placeholder="Choose Theme" />
+                    </SelectTrigger>
+                    <SelectContent className="skin-select-content">
+                      {getAvailableSkins().map(skin => (
+                        <SelectItem key={skin.value} value={skin.value} className="skin-select-item">
+                          <span className="skin-option">
+                            <span className="skin-emoji">{skin.icon}</span>
+                            <span className="skin-label">{skin.label}</span>
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               )}
             </div>
             
@@ -752,14 +823,18 @@ function App() {
                   )}
                   
                   {currentSkin === "moon_man" && (
-                    <div className="moon-surface"></div>
+                    <>
+                      <div className="moon-surface"></div>
+                      <div className="moon-craters"></div>
+                    </>
                   )}
                   
                   {currentSkin === "alien" && (
                     <>
-                      <div className="ufo-body"></div>
-                      <div className="ufo-dome"></div>
-                      <div className="ufo-beam"></div>
+                      <div className="ufo-main-body"></div>
+                      <div className="ufo-dome-top"></div>
+                      <div className="ufo-lights"></div>
+                      <div className="ufo-tractor-beam"></div>
                     </>
                   )}
                 </div>
