@@ -84,7 +84,7 @@ const UPGRADES = [
     baseCost: 100000,
     clickBonus: 25,
     idleBonus: 0,
-    icon: Alien,
+    icon: Bot,
     unlocked: false,
     unlockRequirement: 50000,
     premium: true
