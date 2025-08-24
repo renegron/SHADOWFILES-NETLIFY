@@ -332,27 +332,27 @@ body {
 /* Alien Theme */
 .conspiracy-game.alien-theme {
   background: 
-    radial-gradient(ellipse at 30% 20%, rgba(75, 0, 130, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse at 70% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse at 50% 50%, rgba(25, 25, 112, 0.05) 0%, transparent 80%),
-    linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 30%, #2a1a4a 60%, #1e1a3a 100%);
+    radial-gradient(ellipse at 30% 20%, rgba(0, 128, 0, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse at 70% 80%, rgba(34, 139, 34, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 100, 0, 0.08) 0%, transparent 80%),
+    linear-gradient(135deg, #0a0a0a 0%, #0a2e0a 30%, #1a4a1a 60%, #1a3a1a 100%);
 }
 
 .alien-theme .stat-card {
-  background: rgba(26, 10, 46, 0.8);
-  border-color: rgba(138, 43, 226, 0.5);
-  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+  background: rgba(10, 46, 10, 0.8);
+  border-color: rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
 }
 
 .alien-theme .stat-value {
-  color: #da70d6;
-  text-shadow: 0 0 15px rgba(218, 112, 214, 0.8);
+  color: #00ff00;
+  text-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
 }
 
 .alien-theme .main-click-button {
-  background: radial-gradient(ellipse at center, #4b0082 0%, #663399 30%, #8a2be2 60%, #9370db 100%);
-  border-color: rgba(138, 43, 226, 0.8);
-  box-shadow: 0 0 40px rgba(138, 43, 226, 1);
+  background: radial-gradient(ellipse at center, #001100 0%, #003300 30%, #006600 60%, #00aa00 100%);
+  border-color: rgba(0, 255, 0, 0.8);
+  box-shadow: 0 0 50px rgba(0, 255, 0, 1);
   color: #fff;
   position: relative;
   overflow: visible;
@@ -360,28 +360,29 @@ body {
 
 .alien-theme .main-click-button .click-icon,
 .alien-theme .main-click-button .click-text {
-  color: #fff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  color: #00ff00;
+  text-shadow: 0 0 15px rgba(0, 255, 0, 0.8);
+  z-index: 5;
 }
 
 .alien-theme .main-click-button:hover {
-  box-shadow: 0 0 60px rgba(138, 43, 226, 1.2);
+  box-shadow: 0 0 70px rgba(0, 255, 0, 1.2);
 }
 
 .alien-theme .game-tabs {
-  background: rgba(26, 10, 46, 0.7);
-  border-color: rgba(138, 43, 226, 0.5);
+  background: rgba(10, 46, 10, 0.7);
+  border-color: rgba(0, 255, 0, 0.5);
 }
 
 .alien-theme .upgrade-button,
 .alien-theme .store-button {
-  background: linear-gradient(135deg, #8a2be2 0%, #9370db 100%);
+  background: linear-gradient(135deg, #006600 0%, #00aa00 100%);
   color: #fff;
-  box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
 }
 
 .alien-theme .progress-bar [data-state="indeterminate"] {
-  background: linear-gradient(90deg, #8a2be2, #da70d6);
+  background: linear-gradient(90deg, #006600, #00ff00);
 }
 
 /* Enhanced Alien Face Details */
