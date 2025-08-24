@@ -264,6 +264,16 @@ function App() {
 
   return (
     <div className="conspiracy-game">
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: 'rgba(26, 26, 46, 0.9)',
+            color: '#ffffff',
+            border: '1px solid rgba(120, 119, 198, 0.3)',
+          }
+        }}
+      />
       <div className="game-container">
         <header className="game-header">
           <div className="header-content">
