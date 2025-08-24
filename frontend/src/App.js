@@ -213,15 +213,6 @@ function App() {
     });
   }, [clickCount, totalEvidence, upgrades, achievements]);
 
-  const calculateIdleIncome = (upgradeState) => {
-    let income = 0;
-    UPGRADES.forEach(upgrade => {
-      const owned = upgradeState[upgrade.id] || 0;
-      income += upgrade.idleBonus * owned;
-    });
-    return income;
-  };
-
   const handleClick = useCallback(() => {
     setEvidence(prev => prev + clickPower);
     setTotalEvidence(prev => prev + clickPower);
