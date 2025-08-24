@@ -162,18 +162,27 @@ function App() {
     setSecretsUnlocked(secrets);
   }, [totalEvidence]);
 
-  // Save game state
+  // Save game state with debouncing to prevent excessive saves
   useEffect(() => {
-    const saveData = {
-      evidence,
-      totalEvidence,
-      clickCount,
-      upgrades,
-      achievements,
-      lastSave: Date.now()
-    };
-    console.log("Saving game data:", saveData);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+    const timeoutId = setTimeout(() => {
+      const saveData = {
+        evidence,
+        totalEvidence,
+        clickCount,
+        upgrades,
+        achievements,
+        lastSave: Date.now()
+      };
+      console.log("Saving game data:", saveData);
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+        console.log("Save successful");
+      } catch (error) {
+        console.error("Save failed:", error);
+      }
+    }, 500); // Debounce saves by 500ms
+    
+    return () => clearTimeout(timeoutId);
   }, [evidence, totalEvidence, clickCount, upgrades, achievements]);
 
   // Idle income loop
