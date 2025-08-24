@@ -74,10 +74,23 @@ body {
   filter: drop-shadow(0 0 10px rgba(120, 119, 198, 0.8));
 }
 
+.premium-crown {
+  width: 30px;
+  height: 30px;
+  color: #f1c40f;
+  filter: drop-shadow(0 0 10px rgba(241, 196, 15, 0.8));
+}
+
 .game-subtitle {
   font-size: 1.2rem;
   color: #b0b0b0;
   font-weight: 300;
+}
+
+.skin-badge {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+  margin-top: 10px;
 }
 
 .stats-grid {
@@ -96,6 +109,7 @@ body {
   text-align: center;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .stat-card:hover {
@@ -120,6 +134,35 @@ body {
   font-weight: 700;
   color: #7877c6;
   text-shadow: 0 0 10px rgba(120, 119, 198, 0.4);
+}
+
+.boost-badge {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 0.7rem;
+}
+
+.active-boosts {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.active-boost {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.boost-icon {
+  width: 14px;
+  height: 14px;
 }
 
 /* Main Game Area */
@@ -158,10 +201,20 @@ body {
   margin-bottom: 30px;
 }
 
+.main-click-button.secret-agent-skin {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  border-color: rgba(236, 240, 241, 0.3);
+  box-shadow: 0 0 30px rgba(44, 62, 80, 0.6);
+}
+
 .main-click-button:hover {
   transform: scale(1.05);
   box-shadow: 0 0 40px rgba(120, 119, 198, 0.8);
   border-color: rgba(255, 255, 255, 0.3);
+}
+
+.main-click-button.secret-agent-skin:hover {
+  box-shadow: 0 0 40px rgba(44, 62, 80, 0.8);
 }
 
 .main-click-button.clicked {
@@ -261,6 +314,12 @@ body {
   margin-bottom: 30px;
 }
 
+.tab-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
 /* Upgrades Grid */
 .upgrades-grid {
   display: grid;
@@ -292,6 +351,11 @@ body {
   border-color: rgba(120, 119, 198, 0.1);
 }
 
+.upgrade-card.premium-upgrade {
+  border-color: rgba(241, 196, 15, 0.6);
+  background: rgba(26, 26, 46, 0.8);
+}
+
 .upgrade-content {
   padding: 20px;
   display: flex;
@@ -314,6 +378,15 @@ body {
   width: 40px;
   height: 40px;
   color: #666;
+}
+
+.premium-icon {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  color: #f1c40f;
 }
 
 .owned-badge {
@@ -363,6 +436,114 @@ body {
 .upgrade-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Store Grid */
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.store-card {
+  background: rgba(26, 26, 46, 0.6);
+  border: 2px solid rgba(46, 204, 113, 0.3);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.store-card:hover {
+  border-color: rgba(46, 204, 113, 0.6);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(46, 204, 113, 0.2);
+}
+
+.store-card.purchased {
+  border-color: rgba(241, 196, 15, 0.6);
+  background: rgba(26, 26, 46, 0.8);
+}
+
+.store-content {
+  padding: 20px;
+  text-align: center;
+}
+
+.store-icon {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.store-icon svg {
+  width: 50px;
+  height: 50px;
+  color: #2ecc71;
+}
+
+.store-info h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.store-info p {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.price {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2ecc71;
+  margin-bottom: 15px;
+}
+
+.store-button {
+  background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.store-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
+}
+
+.purchased-badge {
+  background: #f1c40f;
+  color: #000;
+  font-weight: 600;
+}
+
+.demo-notice {
+  background: rgba(52, 152, 219, 0.2);
+  border: 2px solid rgba(52, 152, 219, 0.4);
+}
+
+.demo-content {
+  text-align: center;
+  padding: 20px;
+}
+
+.demo-content h3 {
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.demo-content p {
+  color: #b0b0b0;
+  font-size: 0.9rem;
 }
 
 /* Achievements Grid */
@@ -495,7 +676,8 @@ body {
   }
   
   .upgrades-grid,
-  .achievements-grid {
+  .achievements-grid,
+  .store-grid {
     grid-template-columns: 1fr;
   }
 }

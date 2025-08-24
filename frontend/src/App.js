@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star } from "lucide-react";
+import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star, Crown, ShoppingCart, Sparkles, Alien } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
@@ -75,6 +75,31 @@ const UPGRADES = [
     icon: Clock,
     unlocked: false,
     unlockRequirement: 25000
+  },
+  // Premium upgrades
+  {
+    id: "alien_probe",
+    name: "Alien Probe",
+    description: "PREMIUM: Extraterrestrial evidence scanner (+25 evidence per click)",
+    baseCost: 100000,
+    clickBonus: 25,
+    idleBonus: 0,
+    icon: Alien,
+    unlocked: false,
+    unlockRequirement: 50000,
+    premium: true
+  },
+  {
+    id: "ufo_network",
+    name: "UFO Network",
+    description: "PREMIUM: Galactic surveillance system (+15 evidence/sec)",
+    baseCost: 500000,
+    clickBonus: 0,
+    idleBonus: 15,
+    icon: Sparkles,
+    unlocked: false,
+    unlockRequirement: 200000,
+    premium: true
   }
 ];
 
@@ -83,7 +108,36 @@ const ACHIEVEMENTS = [
   { id: "hundred_clicks", name: "Investigator", description: "Click 100 times", requirement: 100, type: "clicks" },
   { id: "thousand_evidence", name: "Truth Seeker", description: "Gather 1,000 evidence", requirement: 1000, type: "evidence" },
   { id: "ten_thousand_evidence", name: "Conspiracy Expert", description: "Gather 10,000 evidence", requirement: 10000, type: "evidence" },
-  { id: "first_upgrade", name: "Equipped", description: "Buy your first upgrade", requirement: 1, type: "upgrades" }
+  { id: "first_upgrade", name: "Equipped", description: "Buy your first upgrade", requirement: 1, type: "upgrades" },
+  { id: "premium_user", name: "Elite Agent", description: "Purchase premium version", requirement: 1, type: "premium" }
+];
+
+const STORE_ITEMS = [
+  {
+    id: "secret_agent_skin",
+    name: "Secret Agent Skin",
+    description: "Transform your investigator into a professional secret agent",
+    price: 0.99,
+    type: "cosmetic",
+    icon: Crown
+  },
+  {
+    id: "evidence_boost",
+    name: "2x Evidence Boost",
+    description: "Double evidence gain for 24 hours",
+    price: 1.00,
+    type: "boost",
+    duration: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+    icon: Zap
+  },
+  {
+    id: "premium_version",
+    name: "Premium Version",
+    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree",
+    price: 4.99,
+    type: "premium",
+    icon: Star
+  }
 ];
 
 function App() {
@@ -97,6 +151,11 @@ function App() {
   const [lastSave, setLastSave] = useState(Date.now());
   const [clickAnimation, setClickAnimation] = useState(false);
   const [secretsUnlocked, setSecretsUnlocked] = useState(0);
+  
+  // Monetization states
+  const [purchases, setPurchases] = useState({});
+  const [activeBoosts, setActiveBoosts] = useState({});
+  const [currentSkin, setCurrentSkin] = useState("default");
 
   // Helper function to calculate idle income
   const calculateIdleIncome = (upgradeState) => {
@@ -121,6 +180,9 @@ function App() {
         setClickCount(data.clickCount || 0);
         setUpgrades(data.upgrades || {});
         setAchievements(data.achievements || {});
+        setPurchases(data.purchases || {});
+        setActiveBoosts(data.activeBoosts || {});
+        setCurrentSkin(data.currentSkin || "default");
         setLastSave(data.lastSave || Date.now());
         
         // Calculate offline progress
@@ -152,9 +214,15 @@ function App() {
       newIdleIncome += upgrade.idleBonus * owned;
     });
     
+    // Apply boost multiplier
+    if (activeBoosts.evidence_boost && activeBoosts.evidence_boost > Date.now()) {
+      newClickPower *= 2;
+      newIdleIncome *= 2;
+    }
+    
     setClickPower(newClickPower);
     setIdleIncome(newIdleIncome);
-  }, [upgrades]);
+  }, [upgrades, activeBoosts]);
 
   // Unlock upgrades based on total evidence
   useEffect(() => {
@@ -171,6 +239,9 @@ function App() {
         clickCount,
         upgrades,
         achievements,
+        purchases,
+        activeBoosts,
+        currentSkin,
         lastSave: Date.now()
       };
       console.log("Saving game data:", saveData);
@@ -183,7 +254,7 @@ function App() {
     }, 500); // Debounce saves by 500ms
     
     return () => clearTimeout(timeoutId);
-  }, [evidence, totalEvidence, clickCount, upgrades, achievements]);
+  }, [evidence, totalEvidence, clickCount, upgrades, achievements, purchases, activeBoosts, currentSkin]);
 
   // Idle income loop
   useEffect(() => {
@@ -212,6 +283,9 @@ function App() {
           case "upgrades":
             progress = Object.values(upgrades).reduce((sum, count) => sum + count, 0);
             break;
+          case "premium":
+            progress = purchases.premium_version ? 1 : 0;
+            break;
         }
         
         if (progress >= achievement.requirement) {
@@ -220,7 +294,26 @@ function App() {
         }
       }
     });
-  }, [clickCount, totalEvidence, upgrades, achievements]);
+  }, [clickCount, totalEvidence, upgrades, achievements, purchases]);
+
+  // Clean up expired boosts
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = Date.now();
+      setActiveBoosts(prev => {
+        const newBoosts = { ...prev };
+        Object.keys(newBoosts).forEach(key => {
+          if (newBoosts[key] <= now) {
+            delete newBoosts[key];
+            toast(`${key.replace('_', ' ')} has expired!`);
+          }
+        });
+        return newBoosts;
+      });
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
 
   const handleClick = useCallback(() => {
     setEvidence(prev => prev + clickPower);
@@ -234,6 +327,12 @@ function App() {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
     const owned = upgrades[upgradeId] || 0;
     const cost = Math.floor(upgrade.baseCost * Math.pow(1.15, owned));
+    
+    // Check if premium upgrade requires premium version
+    if (upgrade.premium && !purchases.premium_version) {
+      toast("This upgrade requires Premium Version!");
+      return;
+    }
     
     console.log(`Attempting to buy ${upgrade.name}, cost: ${cost}, current evidence: ${evidence}`);
     
@@ -255,6 +354,34 @@ function App() {
     }
   };
 
+  const mockPurchase = (itemId) => {
+    const item = STORE_ITEMS.find(i => i.id === itemId);
+    
+    // Simulate payment processing
+    toast("Processing payment...");
+    
+    setTimeout(() => {
+      setPurchases(prev => ({ ...prev, [itemId]: true }));
+      
+      switch (item.type) {
+        case "cosmetic":
+          setCurrentSkin("secret_agent");
+          toast(`🎨 ${item.name} purchased! Your investigator looks professional!`);
+          break;
+        case "boost":
+          setActiveBoosts(prev => ({ 
+            ...prev, 
+            [itemId]: Date.now() + item.duration 
+          }));
+          toast(`⚡ ${item.name} activated! Double evidence for 24 hours!`);
+          break;
+        case "premium":
+          toast(`⭐ Welcome to Premium! Enjoy ad-free experience and exclusive upgrades!`);
+          break;
+      }
+    }, 1500);
+  };
+
   const getUpgradeCost = (upgradeId) => {
     const upgrade = UPGRADES.find(u => u.id === upgradeId);
     const owned = upgrades[upgradeId] || 0;
@@ -270,6 +397,21 @@ function App() {
     if (num >= 1e6) return `${(num / 1e6).toFixed(2)}M`;
     if (num >= 1e3) return `${(num / 1e3).toFixed(2)}K`;
     return Math.floor(num).toString();
+  };
+
+  const formatTime = (ms) => {
+    const hours = Math.floor(ms / (1000 * 60 * 60));
+    const minutes = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+    return `${hours}h ${minutes}m`;
+  };
+
+  const getSkinClass = () => {
+    switch (currentSkin) {
+      case "secret_agent":
+        return "secret-agent-skin";
+      default:
+        return "";
+    }
   };
 
   return (
@@ -291,8 +433,12 @@ function App() {
               <h1 className="game-title">
                 <Eye className="title-icon" />
                 CONSPIRACY CLICKER
+                {purchases.premium_version && <Crown className="premium-crown" />}
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
+              {currentSkin !== "default" && (
+                <Badge className="skin-badge">Secret Agent Mode</Badge>
+              )}
             </div>
             
             <div className="stats-grid">
@@ -303,6 +449,9 @@ function App() {
               <div className="stat-card">
                 <span className="stat-label">Per Click</span>
                 <span className="stat-value">{formatNumber(clickPower)}</span>
+                {activeBoosts.evidence_boost && activeBoosts.evidence_boost > Date.now() && (
+                  <Badge className="boost-badge">2x Boost</Badge>
+                )}
               </div>
               <div className="stat-card">
                 <span className="stat-label">Per Second</span>
@@ -313,6 +462,18 @@ function App() {
                 <span className="stat-value">{secretsUnlocked}</span>
               </div>
             </div>
+            
+            {/* Active Boosts Display */}
+            {Object.keys(activeBoosts).length > 0 && (
+              <div className="active-boosts">
+                {Object.entries(activeBoosts).map(([boostId, expiry]) => (
+                  <Badge key={boostId} className="active-boost">
+                    <Zap className="boost-icon" />
+                    2x Boost: {formatTime(expiry - Date.now())}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         </header>
 
@@ -320,7 +481,7 @@ function App() {
           <div className="click-section">
             <div className="click-area">
               <Button
-                className={`main-click-button ${clickAnimation ? 'clicked' : ''}`}
+                className={`main-click-button ${clickAnimation ? 'clicked' : ''} ${getSkinClass()}`}
                 onClick={handleClick}
               >
                 <div className="button-content">
@@ -344,6 +505,10 @@ function App() {
             <Tabs defaultValue="upgrades" className="tabs-container">
               <TabsList className="tabs-list">
                 <TabsTrigger value="upgrades">Upgrades</TabsTrigger>
+                <TabsTrigger value="store">
+                  <ShoppingCart className="tab-icon" />
+                  Store
+                </TabsTrigger>
                 <TabsTrigger value="achievements">Achievements</TabsTrigger>
                 <TabsTrigger value="stats">Statistics</TabsTrigger>
               </TabsList>
@@ -355,6 +520,7 @@ function App() {
                   const canAfford = evidence >= cost;
                   const unlocked = isUpgradeUnlocked(upgrade);
                   const Icon = upgrade.icon;
+                  const isPremiumLocked = upgrade.premium && !purchases.premium_version;
 
                   if (!unlocked) {
                     return (
@@ -373,27 +539,85 @@ function App() {
                   }
 
                   return (
-                    <Card key={upgrade.id} className={`upgrade-card ${canAfford ? 'affordable' : ''}`}>
+                    <Card key={upgrade.id} className={`upgrade-card ${canAfford && !isPremiumLocked ? 'affordable' : ''} ${upgrade.premium ? 'premium-upgrade' : ''}`}>
                       <CardContent className="upgrade-content">
                         <div className="upgrade-icon">
                           <Icon />
                           {owned > 0 && <Badge className="owned-badge">{owned}</Badge>}
+                          {upgrade.premium && <Crown className="premium-icon" />}
                         </div>
                         <div className="upgrade-info">
                           <h3>{upgrade.name}</h3>
                           <p>{upgrade.description}</p>
                           <Button
                             onClick={() => buyUpgrade(upgrade.id)}
-                            disabled={!canAfford}
+                            disabled={!canAfford || isPremiumLocked}
                             className="upgrade-button"
                           >
-                            Buy - {formatNumber(cost)} evidence
+                            {isPremiumLocked ? "Requires Premium" : `Buy - ${formatNumber(cost)} evidence`}
                           </Button>
                         </div>
                       </CardContent>
                     </Card>
                   );
                 })}
+              </TabsContent>
+
+              <TabsContent value="store" className="store-grid">
+                {STORE_ITEMS.map(item => {
+                  const Icon = item.icon;
+                  const purchased = purchases[item.id];
+                  const isActive = item.type === "boost" && activeBoosts[item.id] && activeBoosts[item.id] > Date.now();
+
+                  return (
+                    <Card key={item.id} className={`store-card ${purchased ? 'purchased' : ''}`}>
+                      <CardContent className="store-content">
+                        <div className="store-icon">
+                          <Icon />
+                          {item.type === "premium" && <Crown className="premium-icon" />}
+                        </div>
+                        <div className="store-info">
+                          <h3>{item.name}</h3>
+                          <p>{item.description}</p>
+                          <div className="price">${item.price}</div>
+                          
+                          {purchased ? (
+                            <div className="purchased-status">
+                              {item.type === "boost" && isActive ? (
+                                <Badge className="active-boost">
+                                  Active: {formatTime(activeBoosts[item.id] - Date.now())}
+                                </Badge>
+                              ) : item.type === "boost" ? (
+                                <Button 
+                                  onClick={() => mockPurchase(item.id)}
+                                  className="store-button"
+                                >
+                                  Buy Again - ${item.price}
+                                </Button>
+                              ) : (
+                                <Badge className="purchased-badge">Owned</Badge>
+                              )}
+                            </div>
+                          ) : (
+                            <Button
+                              onClick={() => mockPurchase(item.id)}
+                              className="store-button"
+                            >
+                              Buy - ${item.price}
+                            </Button>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
+                
+                <Card className="demo-notice">
+                  <CardContent className="demo-content">
+                    <h3>🚀 Demo Mode</h3>
+                    <p>This is a demonstration of the monetization features. In the live version, these purchases will use real PayPal payments.</p>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="achievements" className="achievements-grid">
@@ -446,6 +670,14 @@ function App() {
                       <div className="stat-row">
                         <span>Achievements Earned:</span>
                         <span>{Object.keys(achievements).length} / {ACHIEVEMENTS.length}</span>
+                      </div>
+                      <div className="stat-row">
+                        <span>Premium Status:</span>
+                        <span>{purchases.premium_version ? "Premium User" : "Free User"}</span>
+                      </div>
+                      <div className="stat-row">
+                        <span>Current Skin:</span>
+                        <span>{currentSkin === "secret_agent" ? "Secret Agent" : "Default"}</span>
                       </div>
                     </CardContent>
                   </Card>
