@@ -98,6 +98,16 @@ function App() {
   const [clickAnimation, setClickAnimation] = useState(false);
   const [secretsUnlocked, setSecretsUnlocked] = useState(0);
 
+  // Helper function to calculate idle income
+  const calculateIdleIncome = (upgradeState) => {
+    let income = 0;
+    UPGRADES.forEach(upgrade => {
+      const owned = upgradeState[upgrade.id] || 0;
+      income += upgrade.idleBonus * owned;
+    });
+    return income;
+  };
+
   // Load game state
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY);
