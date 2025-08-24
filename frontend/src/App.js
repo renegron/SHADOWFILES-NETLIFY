@@ -100,9 +100,11 @@ function App() {
   // Load game state
   useEffect(() => {
     const savedData = localStorage.getItem(STORAGE_KEY);
+    console.log("Loading save data:", savedData);
     if (savedData) {
       try {
         const data = JSON.parse(savedData);
+        console.log("Parsed save data:", data);
         setEvidence(data.evidence || 0);
         setTotalEvidence(data.totalEvidence || 0);
         setClickCount(data.clickCount || 0);
@@ -123,6 +125,8 @@ function App() {
       } catch (e) {
         console.error("Failed to load save data:", e);
       }
+    } else {
+      console.log("No saved data found");
     }
   }, []);
 
