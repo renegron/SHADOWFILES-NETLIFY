@@ -105,11 +105,13 @@ const UPGRADES = [
 ];
 
 const CONSPIRACY_STORIES = [
+  // Level 1 - Basic Truths
   {
     id: "first_truth",
     title: "The Watchers",
     story: "Your investigation reveals a network of surveillance systems monitoring every citizen. Hidden cameras in street lights, microphones in smart devices, and AI algorithms tracking behavior patterns. The evidence is overwhelming - privacy is an illusion.",
     cost: 500,
+    level: 1,
     unlocked: false
   },
   {
@@ -117,6 +119,7 @@ const CONSPIRACY_STORIES = [
     title: "The Memory Holes",
     story: "Documents disappear from archives, news articles vanish from websites, and historical records are altered. You've discovered the Ministry of Truth - a shadow organization rewriting history in real-time to control the narrative.",
     cost: 1500,
+    level: 1,
     unlocked: false
   },
   {
@@ -124,34 +127,59 @@ const CONSPIRACY_STORIES = [
     title: "The Puppet Masters",
     story: "Elections are theater. Behind closed doors, a council of twelve families controls world governments through financial manipulation, blackmail, and strategic assassinations. Democracy is their greatest lie.",
     cost: 3000,
+    level: 1,
     unlocked: false
   },
+  
+  // Level 2 - Deeper Conspiracies
   {
     id: "fourth_truth",
     title: "The Mind Harvest",
     story: "Social media platforms aren't connecting people - they're harvesting thoughts. Advanced AI processes every post, comment, and reaction to map human consciousness and predict behavior with 99.7% accuracy.",
-    cost: 6000,
+    cost: 8000,
+    level: 2,
     unlocked: false
   },
   {
     id: "fifth_truth",
     title: "The Great Reset",
     story: "Climate change is real, but the solution isn't green energy - it's population control. The elite have underground cities ready while they engineer a 'natural' disaster to reduce Earth's population by 80%.",
-    cost: 12000,
+    cost: 15000,
+    level: 2,
     unlocked: false
   },
   {
     id: "sixth_truth",
+    title: "The Digital Prison",
+    story: "Cryptocurrency and digital IDs aren't freedom - they're the ultimate control system. Every transaction tracked, every movement monitored, every dissenter silenced with the flip of a switch.",
+    cost: 30000,
+    level: 2,
+    unlocked: false
+  },
+  
+  // Level 3 - Ultimate Revelations
+  {
+    id: "seventh_truth",
     title: "The Alien Accord",
     story: "First contact happened in 1954. The Eisenhower Administration signed a treaty trading human genetic material for advanced technology. UFO 'sightings' are authorized leaks to prepare for full disclosure.",
-    cost: 25000,
+    cost: 75000,
+    level: 3,
     unlocked: false
   },
   {
-    id: "seventh_truth",
+    id: "eighth_truth",
     title: "The Simulation Protocol",
     story: "Reality glitches aren't coincidences - they're system errors. You've found proof that existence is a quantum simulation run by our future selves to prevent a timeline where humanity destroys itself.",
-    cost: 50000,
+    cost: 150000,
+    level: 3,
+    unlocked: false
+  },
+  {
+    id: "ninth_truth",
+    title: "The Final Truth",
+    story: "You are not the first to reach this knowledge. Every generation, a select few discover the truth, only to be absorbed into the system. The conspiracy isn't what they're hiding from you - it's what they're protecting you from. The real enemy lies beyond the stars, and humanity's survival depends on maintaining the lie.",
+    cost: 500000,
+    level: 3,
     unlocked: false
   }
 ];
@@ -163,14 +191,16 @@ const ACHIEVEMENTS = [
   { id: "ten_thousand_evidence", name: "Conspiracy Expert", description: "Gather 10,000 evidence", requirement: 10000, type: "evidence" },
   { id: "first_upgrade", name: "Equipped", description: "Buy your first upgrade", requirement: 1, type: "upgrades" },
   { id: "premium_user", name: "Elite Agent", description: "Purchase premium version", requirement: 1, type: "premium" },
-  { id: "first_secret", name: "Truth Revealer", description: "Unlock your first conspiracy secret", requirement: 1, type: "secrets" }
+  { id: "first_secret", name: "Truth Revealer", description: "Unlock your first conspiracy secret", requirement: 1, type: "secrets" },
+  { id: "deep_secrets", name: "Deep Truth Seeker", description: "Unlock a Level 2 conspiracy", requirement: 1, type: "level2_secrets" },
+  { id: "ultimate_truth", name: "Ultimate Truth Keeper", description: "Unlock a Level 3 conspiracy", requirement: 1, type: "level3_secrets" }
 ];
 
 const STORE_ITEMS = [
   {
     id: "secret_agent_skin",
     name: "Secret Agent Skin",
-    description: "Transform into a professional operative with sleek dark theme",
+    description: "Transform into a professional operative with sleek dark theme, fedora hat, and sunglasses",
     price: 0.99,
     type: "cosmetic",
     icon: Crown
@@ -178,7 +208,7 @@ const STORE_ITEMS = [
   {
     id: "moon_man_skin",
     name: "Moon Man Skin", 
-    description: "Embrace the lunar conspiracy with cosmic silver theme",
+    description: "Embrace the lunar conspiracy with cosmic silver theme and starry background",
     price: 0.99,
     type: "cosmetic",
     icon: Moon
@@ -195,7 +225,7 @@ const STORE_ITEMS = [
   {
     id: "premium_version",
     name: "Premium Version",
-    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree",
+    description: "Ad-free experience + Exclusive Alien Invasion upgrade tree + Bright green alien theme with UFO button",
     price: 4.99,
     type: "premium",
     icon: Star
@@ -354,6 +384,18 @@ function App() {
           case "secrets":
             progress = Object.keys(unlockedStories).length;
             break;
+          case "level2_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 2;
+            }).length;
+            break;
+          case "level3_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 3;
+            }).length;
+            break;
         }
         
         if (progress >= achievement.requirement) {
@@ -461,7 +503,9 @@ function App() {
           toast(`⚡ ${item.name} activated! Double evidence for 24 hours!`);
           break;
         case "premium":
-          toast(`⭐ Welcome to Premium! Enjoy ad-free experience and exclusive upgrades!`);
+          // Premium also activates alien theme
+          setCurrentSkin("alien");
+          toast(`⭐ Welcome to Premium! Enjoy ad-free experience, exclusive upgrades, and alien theme!`);
           break;
       }
     }, 1500);
@@ -496,9 +540,15 @@ function App() {
         return "secret-agent-theme";
       case "moon_man":
         return "moon-man-theme";
+      case "alien":
+        return "alien-theme";
       default:
         return "";
     }
+  };
+
+  const getStoriesByLevel = (level) => {
+    return CONSPIRACY_STORIES.filter(story => story.level === level);
   };
 
   return (
@@ -525,7 +575,9 @@ function App() {
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
               {currentSkin !== "default" && (
                 <Badge className={`skin-badge ${currentSkin}-badge`}>
-                  {currentSkin === "secret_agent" ? "Secret Agent Mode" : "Moon Man Mode"}
+                  {currentSkin === "secret_agent" ? "Secret Agent Mode" : 
+                   currentSkin === "moon_man" ? "Moon Man Mode" :
+                   currentSkin === "alien" ? "Alien Commander Mode" : ""}
                 </Badge>
               )}
             </div>
@@ -560,37 +612,105 @@ function App() {
                     <DialogHeader>
                       <DialogTitle>Conspiracy Archive</DialogTitle>
                       <DialogDescription>
-                        Unlock dark secrets by spending evidence. Each truth comes at a cost.
+                        Unlock dark secrets by spending evidence. Each level requires more evidence to access deeper truths.
                       </DialogDescription>
                     </DialogHeader>
                     <div className="secrets-list">
-                      {CONSPIRACY_STORIES.map(secret => {
-                        const isUnlocked = unlockedStories[secret.id];
-                        const canAfford = evidence >= secret.cost;
-                        
-                        return (
-                          <div key={secret.id} className={`secret-item ${isUnlocked ? 'unlocked' : ''}`}>
-                            <div className="secret-header">
-                              <h4>{isUnlocked ? secret.title : "???"}</h4>
-                              <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
-                            </div>
-                            {isUnlocked ? (
-                              <p className="secret-story">{secret.story}</p>
-                            ) : (
-                              <div className="secret-locked">
-                                <p>A conspiracy truth awaits revelation...</p>
-                                <Button 
-                                  onClick={() => unlockSecret(secret.id)}
-                                  disabled={!canAfford}
-                                  className="unlock-button"
-                                >
-                                  {canAfford ? "Unlock Truth" : "Insufficient Evidence"}
-                                </Button>
+                      {/* Level 1 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 1 - Surface Truths</h3>
+                        {getStoriesByLevel(1).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-1 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
                               </div>
-                            )}
-                          </div>
-                        );
-                      })}
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>A basic conspiracy truth awaits revelation...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-1-button"
+                                  >
+                                    {canAfford ? "Unlock Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 2 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 2 - Deeper Conspiracies</h3>
+                        {getStoriesByLevel(2).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-2 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Advanced conspiracy knowledge requires significant evidence...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-2-button"
+                                  >
+                                    {canAfford ? "Unlock Deep Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 3 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 3 - Ultimate Revelations</h3>
+                        {getStoriesByLevel(3).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-3 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>The ultimate truths demand enormous evidence to unlock...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-3-button"
+                                  >
+                                    {canAfford ? "Unlock Ultimate Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </DialogContent>
                 </Dialog>
@@ -622,6 +742,26 @@ function App() {
                   <Eye className="click-icon" />
                   <span className="click-text">INVESTIGATE</span>
                   <div className="click-ripple"></div>
+                  
+                  {/* Theme-specific decorations */}
+                  {currentSkin === "secret_agent" && (
+                    <>
+                      <div className="agent-hat"></div>
+                      <div className="agent-glasses"></div>
+                    </>
+                  )}
+                  
+                  {currentSkin === "moon_man" && (
+                    <div className="moon-surface"></div>
+                  )}
+                  
+                  {currentSkin === "alien" && (
+                    <>
+                      <div className="ufo-body"></div>
+                      <div className="ufo-dome"></div>
+                      <div className="ufo-beam"></div>
+                    </>
+                  )}
                 </div>
               </Button>
               
@@ -810,10 +950,11 @@ function App() {
                         <span>{purchases.premium_version ? "Premium User" : "Free User"}</span>
                       </div>
                       <div className="stat-row">
-                        <span>Current Skin:</span>
+                        <span>Current Theme:</span>
                         <span>{
                           currentSkin === "secret_agent" ? "Secret Agent" : 
-                          currentSkin === "moon_man" ? "Moon Man" : 
+                          currentSkin === "moon_man" ? "Moon Man" :
+                          currentSkin === "alien" ? "Alien Commander" :
                           "Default"
                         }</span>
                       </div>
