@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star, Crown, ShoppingCart, Sparkles, Bot } from "lucide-react";
+import { Eye, Zap, Clock, TrendingUp, Shield, Globe, Cpu, Brain, Star, Crown, ShoppingCart, Sparkles, Bot, Moon, Scroll } from "lucide-react";
 import { Button } from "./components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Badge } from "./components/ui/badge";
 import { Progress } from "./components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog";
 import { toast } from "sonner";
 import { Toaster } from "./components/ui/sonner";
 
@@ -103,29 +104,90 @@ const UPGRADES = [
   }
 ];
 
+const CONSPIRACY_STORIES = [
+  {
+    id: "first_truth",
+    title: "The Watchers",
+    story: "Your investigation reveals a network of surveillance systems monitoring every citizen. Hidden cameras in street lights, microphones in smart devices, and AI algorithms tracking behavior patterns. The evidence is overwhelming - privacy is an illusion.",
+    cost: 500,
+    unlocked: false
+  },
+  {
+    id: "second_truth", 
+    title: "The Memory Holes",
+    story: "Documents disappear from archives, news articles vanish from websites, and historical records are altered. You've discovered the Ministry of Truth - a shadow organization rewriting history in real-time to control the narrative.",
+    cost: 1500,
+    unlocked: false
+  },
+  {
+    id: "third_truth",
+    title: "The Puppet Masters",
+    story: "Elections are theater. Behind closed doors, a council of twelve families controls world governments through financial manipulation, blackmail, and strategic assassinations. Democracy is their greatest lie.",
+    cost: 3000,
+    unlocked: false
+  },
+  {
+    id: "fourth_truth",
+    title: "The Mind Harvest",
+    story: "Social media platforms aren't connecting people - they're harvesting thoughts. Advanced AI processes every post, comment, and reaction to map human consciousness and predict behavior with 99.7% accuracy.",
+    cost: 6000,
+    unlocked: false
+  },
+  {
+    id: "fifth_truth",
+    title: "The Great Reset",
+    story: "Climate change is real, but the solution isn't green energy - it's population control. The elite have underground cities ready while they engineer a 'natural' disaster to reduce Earth's population by 80%.",
+    cost: 12000,
+    unlocked: false
+  },
+  {
+    id: "sixth_truth",
+    title: "The Alien Accord",
+    story: "First contact happened in 1954. The Eisenhower Administration signed a treaty trading human genetic material for advanced technology. UFO 'sightings' are authorized leaks to prepare for full disclosure.",
+    cost: 25000,
+    unlocked: false
+  },
+  {
+    id: "seventh_truth",
+    title: "The Simulation Protocol",
+    story: "Reality glitches aren't coincidences - they're system errors. You've found proof that existence is a quantum simulation run by our future selves to prevent a timeline where humanity destroys itself.",
+    cost: 50000,
+    unlocked: false
+  }
+];
+
 const ACHIEVEMENTS = [
   { id: "first_click", name: "First Click", description: "Click once", requirement: 1, type: "clicks" },
   { id: "hundred_clicks", name: "Investigator", description: "Click 100 times", requirement: 100, type: "clicks" },
   { id: "thousand_evidence", name: "Truth Seeker", description: "Gather 1,000 evidence", requirement: 1000, type: "evidence" },
   { id: "ten_thousand_evidence", name: "Conspiracy Expert", description: "Gather 10,000 evidence", requirement: 10000, type: "evidence" },
   { id: "first_upgrade", name: "Equipped", description: "Buy your first upgrade", requirement: 1, type: "upgrades" },
-  { id: "premium_user", name: "Elite Agent", description: "Purchase premium version", requirement: 1, type: "premium" }
+  { id: "premium_user", name: "Elite Agent", description: "Purchase premium version", requirement: 1, type: "premium" },
+  { id: "first_secret", name: "Truth Revealer", description: "Unlock your first conspiracy secret", requirement: 1, type: "secrets" }
 ];
 
 const STORE_ITEMS = [
   {
     id: "secret_agent_skin",
     name: "Secret Agent Skin",
-    description: "Transform your investigator into a professional secret agent",
+    description: "Transform into a professional operative with sleek dark theme",
     price: 0.99,
     type: "cosmetic",
     icon: Crown
   },
   {
+    id: "moon_man_skin",
+    name: "Moon Man Skin", 
+    description: "Embrace the lunar conspiracy with cosmic silver theme",
+    price: 0.99,
+    type: "cosmetic",
+    icon: Moon
+  },
+  {
     id: "evidence_boost",
     name: "2x Evidence Boost",
     description: "Double evidence gain for 24 hours",
-    price: 1.00,
+    price: 1.99,
     type: "boost",
     duration: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
     icon: Zap
@@ -151,6 +213,7 @@ function App() {
   const [lastSave, setLastSave] = useState(Date.now());
   const [clickAnimation, setClickAnimation] = useState(false);
   const [secretsUnlocked, setSecretsUnlocked] = useState(0);
+  const [unlockedStories, setUnlockedStories] = useState({});
   
   // Monetization states
   const [purchases, setPurchases] = useState({});
@@ -183,6 +246,7 @@ function App() {
         setPurchases(data.purchases || {});
         setActiveBoosts(data.activeBoosts || {});
         setCurrentSkin(data.currentSkin || "default");
+        setUnlockedStories(data.unlockedStories || {});
         setLastSave(data.lastSave || Date.now());
         
         // Calculate offline progress
@@ -224,11 +288,11 @@ function App() {
     setIdleIncome(newIdleIncome);
   }, [upgrades, activeBoosts]);
 
-  // Unlock upgrades based on total evidence
+  // Update secrets unlocked based on available stories
   useEffect(() => {
-    const secrets = Math.floor(totalEvidence / 1000);
-    setSecretsUnlocked(secrets);
-  }, [totalEvidence]);
+    const unlockedCount = Object.keys(unlockedStories).length;
+    setSecretsUnlocked(unlockedCount);
+  }, [unlockedStories]);
 
   // Save game state with debouncing to prevent excessive saves
   useEffect(() => {
@@ -242,6 +306,7 @@ function App() {
         purchases,
         activeBoosts,
         currentSkin,
+        unlockedStories,
         lastSave: Date.now()
       };
       console.log("Saving game data:", saveData);
@@ -254,7 +319,7 @@ function App() {
     }, 500); // Debounce saves by 500ms
     
     return () => clearTimeout(timeoutId);
-  }, [evidence, totalEvidence, clickCount, upgrades, achievements, purchases, activeBoosts, currentSkin]);
+  }, [evidence, totalEvidence, clickCount, upgrades, achievements, purchases, activeBoosts, currentSkin, unlockedStories]);
 
   // Idle income loop
   useEffect(() => {
@@ -286,6 +351,9 @@ function App() {
           case "premium":
             progress = purchases.premium_version ? 1 : 0;
             break;
+          case "secrets":
+            progress = Object.keys(unlockedStories).length;
+            break;
         }
         
         if (progress >= achievement.requirement) {
@@ -294,7 +362,7 @@ function App() {
         }
       }
     });
-  }, [clickCount, totalEvidence, upgrades, achievements, purchases]);
+  }, [clickCount, totalEvidence, upgrades, achievements, purchases, unlockedStories]);
 
   // Clean up expired boosts
   useEffect(() => {
@@ -354,6 +422,18 @@ function App() {
     }
   };
 
+  const unlockSecret = (secretId) => {
+    const secret = CONSPIRACY_STORIES.find(s => s.id === secretId);
+    
+    if (evidence >= secret.cost) {
+      setEvidence(prev => prev - secret.cost);
+      setUnlockedStories(prev => ({ ...prev, [secretId]: true }));
+      toast(`🔍 Truth Revealed: ${secret.title}`);
+    } else {
+      toast(`Not enough evidence! Need ${formatNumber(secret.cost)} evidence.`);
+    }
+  };
+
   const mockPurchase = (itemId) => {
     const item = STORE_ITEMS.find(i => i.id === itemId);
     
@@ -365,8 +445,13 @@ function App() {
       
       switch (item.type) {
         case "cosmetic":
-          setCurrentSkin("secret_agent");
-          toast(`🎨 ${item.name} purchased! Your investigator looks professional!`);
+          if (itemId === "secret_agent_skin") {
+            setCurrentSkin("secret_agent");
+            toast(`🎨 ${item.name} purchased! Professional operative mode activated!`);
+          } else if (itemId === "moon_man_skin") {
+            setCurrentSkin("moon_man");
+            toast(`🌙 ${item.name} purchased! Lunar conspiracy mode activated!`);
+          }
           break;
         case "boost":
           setActiveBoosts(prev => ({ 
@@ -408,14 +493,16 @@ function App() {
   const getSkinClass = () => {
     switch (currentSkin) {
       case "secret_agent":
-        return "secret-agent-skin";
+        return "secret-agent-theme";
+      case "moon_man":
+        return "moon-man-theme";
       default:
         return "";
     }
   };
 
   return (
-    <div className="conspiracy-game">
+    <div className={`conspiracy-game ${getSkinClass()}`}>
       <Toaster 
         position="top-right"
         toastOptions={{
@@ -437,7 +524,9 @@ function App() {
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
               {currentSkin !== "default" && (
-                <Badge className="skin-badge">Secret Agent Mode</Badge>
+                <Badge className={`skin-badge ${currentSkin}-badge`}>
+                  {currentSkin === "secret_agent" ? "Secret Agent Mode" : "Moon Man Mode"}
+                </Badge>
               )}
             </div>
             
@@ -457,9 +546,54 @@ function App() {
                 <span className="stat-label">Per Second</span>
                 <span className="stat-value">{formatNumber(idleIncome)}</span>
               </div>
-              <div className="stat-card">
+              <div className="stat-card secrets-card">
                 <span className="stat-label">Secrets</span>
                 <span className="stat-value">{secretsUnlocked}</span>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="secrets-button" size="sm">
+                      <Scroll className="secrets-icon" />
+                      View
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="secrets-dialog">
+                    <DialogHeader>
+                      <DialogTitle>Conspiracy Archive</DialogTitle>
+                      <DialogDescription>
+                        Unlock dark secrets by spending evidence. Each truth comes at a cost.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="secrets-list">
+                      {CONSPIRACY_STORIES.map(secret => {
+                        const isUnlocked = unlockedStories[secret.id];
+                        const canAfford = evidence >= secret.cost;
+                        
+                        return (
+                          <div key={secret.id} className={`secret-item ${isUnlocked ? 'unlocked' : ''}`}>
+                            <div className="secret-header">
+                              <h4>{isUnlocked ? secret.title : "???"}</h4>
+                              <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                            </div>
+                            {isUnlocked ? (
+                              <p className="secret-story">{secret.story}</p>
+                            ) : (
+                              <div className="secret-locked">
+                                <p>A conspiracy truth awaits revelation...</p>
+                                <Button 
+                                  onClick={() => unlockSecret(secret.id)}
+                                  disabled={!canAfford}
+                                  className="unlock-button"
+                                >
+                                  {canAfford ? "Unlock Truth" : "Insufficient Evidence"}
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
             
@@ -481,7 +615,7 @@ function App() {
           <div className="click-section">
             <div className="click-area">
               <Button
-                className={`main-click-button ${clickAnimation ? 'clicked' : ''} ${getSkinClass()}`}
+                className={`main-click-button ${clickAnimation ? 'clicked' : ''}`}
                 onClick={handleClick}
               >
                 <div className="button-content">
@@ -493,9 +627,9 @@ function App() {
               
               <div className="click-feedback">
                 <p>Click to gather evidence of hidden truths!</p>
-                <Progress value={(totalEvidence % 1000) / 10} className="progress-bar" />
+                <Progress value={Math.min((evidence / 1000) * 100, 100)} className="progress-bar" />
                 <p className="progress-text">
-                  {Math.floor((totalEvidence % 1000))} / 1000 to next secret
+                  {formatNumber(evidence)} evidence collected
                 </p>
               </div>
             </div>
@@ -677,7 +811,11 @@ function App() {
                       </div>
                       <div className="stat-row">
                         <span>Current Skin:</span>
-                        <span>{currentSkin === "secret_agent" ? "Secret Agent" : "Default"}</span>
+                        <span>{
+                          currentSkin === "secret_agent" ? "Secret Agent" : 
+                          currentSkin === "moon_man" ? "Moon Man" : 
+                          "Default"
+                        }</span>
                       </div>
                     </CardContent>
                   </Card>
