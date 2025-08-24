@@ -1,34 +1,518 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  overflow-x: hidden;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
+.conspiracy-game {
+  min-height: 100vh;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+}
+
+.conspiracy-game::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/></filter></defs><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.03"/></svg>');
+  pointer-events: none;
+  z-index: 1;
+}
+
+.game-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styles */
+.game-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px 0;
+  border-bottom: 2px solid rgba(120, 119, 198, 0.2);
+}
+
+.title-section {
+  margin-bottom: 30px;
+}
+
+.game-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(120, 119, 198, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.title-icon {
+  width: 50px;
+  height: 50px;
+  color: #7877c6;
+  filter: drop-shadow(0 0 10px rgba(120, 119, 198, 0.8));
+}
+
+.game-subtitle {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  font-weight: 300;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stat-card {
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid rgba(120, 119, 198, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(120, 119, 198, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(120, 119, 198, 0.2);
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  display: block;
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #7877c6;
+  text-shadow: 0 0 10px rgba(120, 119, 198, 0.4);
+}
+
+/* Main Game Area */
+.game-main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Click Section */
+.click-section {
+  position: sticky;
+  top: 20px;
+}
+
+.click-area {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(26, 26, 46, 0.4);
+  border: 2px solid rgba(120, 119, 198, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+}
+
+.main-click-button {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7877c6 0%, #9b59b6 100%);
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.main-click-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(120, 119, 198, 0.8);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.main-click-button.clicked {
+  transform: scale(0.95);
+  box-shadow: 0 0 60px rgba(120, 119, 198, 1);
+}
+
+.button-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.click-icon {
+  width: 60px;
+  height: 60px;
+  color: white;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+}
+
+.click-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.click-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.main-click-button.clicked .click-ripple {
+  animation: ripple 0.4s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.click-feedback {
+  text-align: center;
+}
+
+.click-feedback p {
+  margin-bottom: 15px;
+  color: #b0b0b0;
+  font-size: 1.1rem;
+}
+
+.progress-bar {
+  margin: 15px 0;
+  height: 8px;
+}
+
+.progress-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.9rem;
+  color: #7877c6;
+}
+
+/* Tabs Section */
+.game-tabs {
+  background: rgba(26, 26, 46, 0.4);
+  border: 2px solid rgba(120, 119, 198, 0.3);
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  padding: 30px;
+}
+
+.tabs-container {
+  width: 100%;
+}
+
+.tabs-list {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(120, 119, 198, 0.3);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 30px;
+}
+
+/* Upgrades Grid */
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.upgrade-card {
+  background: rgba(26, 26, 46, 0.6);
+  border: 2px solid rgba(120, 119, 198, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.upgrade-card:hover {
+  border-color: rgba(120, 119, 198, 0.5);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(120, 119, 198, 0.2);
+}
+
+.upgrade-card.affordable {
+  border-color: rgba(46, 204, 113, 0.6);
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
+}
+
+.upgrade-card.locked {
+  opacity: 0.5;
+  border-color: rgba(120, 119, 198, 0.1);
+}
+
+.upgrade-content {
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.upgrade-icon {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.upgrade-icon svg {
+  width: 40px;
+  height: 40px;
+  color: #7877c6;
+}
+
+.upgrade-icon-locked svg {
+  width: 40px;
+  height: 40px;
+  color: #666;
+}
+
+.owned-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #7877c6;
+  color: white;
+  font-size: 0.7rem;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upgrade-info h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.upgrade-info p {
+  color: #b0b0b0;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.upgrade-button {
+  background: linear-gradient(135deg, #7877c6 0%, #9b59b6 100%);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.upgrade-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(120, 119, 198, 0.4);
+}
+
+.upgrade-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Achievements Grid */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.achievement-card {
+  background: rgba(26, 26, 46, 0.6);
+  border: 2px solid rgba(120, 119, 198, 0.2);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.achievement-card.earned {
+  border-color: rgba(241, 196, 15, 0.6);
+  box-shadow: 0 0 20px rgba(241, 196, 15, 0.2);
+}
+
+.achievement-content {
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.achievement-icon .star-earned {
+  width: 30px;
+  height: 30px;
+  color: #f1c40f;
+}
+
+.achievement-icon .star-locked {
+  width: 30px;
+  height: 30px;
+  color: #666;
+}
+
+.achievement-info h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+.achievement-info p {
+  color: #b0b0b0;
+  font-size: 0.85rem;
+}
+
+.earned-badge {
+  background: #f1c40f;
+  color: #000;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Stats Panel */
+.stats-panel {
+  max-width: 600px;
+}
+
+.stats-content {
+  padding: 20px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(120, 119, 198, 0.1);
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-row span:first-child {
+  color: #b0b0b0;
+}
+
+.stat-row span:last-child {
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  color: #7877c6;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .game-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .click-section {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-container {
+    padding: 15px;
+  }
+  
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .title-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .main-click-button {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .click-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .upgrades-grid,
+  .achievements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .main-click-button {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .game-title {
+    font-size: 1.5rem;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
-
-.App-link {
-    color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    gap: 10px;
+  }
 }

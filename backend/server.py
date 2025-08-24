@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -6,10 +6,9 @@ import os
 import logging
 from pathlib import Path
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Optional
 import uuid
-from datetime import datetime
-
+from datetime import datetime, timezone
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -25,32 +24,204 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-
-# Define Models
-class StatusCheck(BaseModel):
+# Game Models
+class GameSave(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    client_name: str
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    player_id: str
+    evidence: float = 0
+    total_evidence: float = 0
+    click_count: int = 0
+    upgrades: dict = {}
+    achievements: dict = {}
+    last_save: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-class StatusCheckCreate(BaseModel):
-    client_name: str
+class GameSaveCreate(BaseModel):
+    player_id: str
+    evidence: float = 0
+    total_evidence: float = 0
+    click_count: int = 0
+    upgrades: dict = {}
+    achievements: dict = {}
 
-# Add your routes to the router instead of directly to app
+class GameSaveUpdate(BaseModel):
+    evidence: Optional[float] = None
+    total_evidence: Optional[float] = None
+    click_count: Optional[int] = None
+    upgrades: Optional[dict] = None
+    achievements: Optional[dict] = None
+
+class LeaderboardEntry(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    player_id: str
+    player_name: str
+    total_evidence: float
+    secrets_unlocked: int
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+class LeaderboardCreate(BaseModel):
+    player_id: str
+    player_name: str
+    total_evidence: float
+    secrets_unlocked: int
+
+# Helper function to prepare data for MongoDB
+def prepare_for_mongo(data):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            if isinstance(value, datetime):
+                data[key] = value
+    return data
+
+# Game Save Endpoints
+@api_router.post("/save", response_model=GameSave)
+async def create_game_save(game_save: GameSaveCreate):
+    """Create a new game save"""
+    save_dict = game_save.dict()
+    save_obj = GameSave(**save_dict)
+    save_data = prepare_for_mongo(save_obj.dict())
+    
+    # Check if player already has a save
+    existing_save = await db.game_saves.find_one({"player_id": game_save.player_id})
+    if existing_save:
+        raise HTTPException(status_code=400, detail="Player already has a save game")
+    
+    await db.game_saves.insert_one(save_data)
+    return save_obj
+
+@api_router.get("/save/{player_id}", response_model=GameSave)
+async def get_game_save(player_id: str):
+    """Get game save for a player"""
+    save = await db.game_saves.find_one({"player_id": player_id})
+    if not save:
+        raise HTTPException(status_code=404, detail="Save game not found")
+    return GameSave(**save)
+
+@api_router.put("/save/{player_id}", response_model=GameSave)
+async def update_game_save(player_id: str, update_data: GameSaveUpdate):
+    """Update game save for a player"""
+    existing_save = await db.game_saves.find_one({"player_id": player_id})
+    if not existing_save:
+        raise HTTPException(status_code=404, detail="Save game not found")
+    
+    update_dict = {k: v for k, v in update_data.dict().items() if v is not None}
+    update_dict["last_save"] = datetime.now(timezone.utc)
+    
+    await db.game_saves.update_one(
+        {"player_id": player_id},
+        {"$set": prepare_for_mongo(update_dict)}
+    )
+    
+    updated_save = await db.game_saves.find_one({"player_id": player_id})
+    return GameSave(**updated_save)
+
+@api_router.delete("/save/{player_id}")
+async def delete_game_save(player_id: str):
+    """Delete game save for a player"""
+    result = await db.game_saves.delete_one({"player_id": player_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Save game not found")
+    return {"message": "Save game deleted successfully"}
+
+# Leaderboard Endpoints
+@api_router.post("/leaderboard", response_model=LeaderboardEntry)
+async def submit_score(entry: LeaderboardCreate):
+    """Submit a score to the leaderboard"""
+    entry_dict = entry.dict()
+    leaderboard_entry = LeaderboardEntry(**entry_dict)
+    entry_data = prepare_for_mongo(leaderboard_entry.dict())
+    
+    # Check if player already has an entry
+    existing_entry = await db.leaderboard.find_one({"player_id": entry.player_id})
+    if existing_entry:
+        # Update if new score is higher
+        if entry.total_evidence > existing_entry.get("total_evidence", 0):
+            await db.leaderboard.update_one(
+                {"player_id": entry.player_id},
+                {"$set": entry_data}
+            )
+            updated_entry = await db.leaderboard.find_one({"player_id": entry.player_id})
+            return LeaderboardEntry(**updated_entry)
+        else:
+            return LeaderboardEntry(**existing_entry)
+    else:
+        await db.leaderboard.insert_one(entry_data)
+        return leaderboard_entry
+
+@api_router.get("/leaderboard", response_model=List[LeaderboardEntry])
+async def get_leaderboard(limit: int = 100):
+    """Get top players from leaderboard"""
+    entries = await db.leaderboard.find().sort("total_evidence", -1).limit(limit).to_list(limit)
+    return [LeaderboardEntry(**entry) for entry in entries]
+
+@api_router.get("/leaderboard/rank/{player_id}")
+async def get_player_rank(player_id: str):
+    """Get player's rank on the leaderboard"""
+    player_entry = await db.leaderboard.find_one({"player_id": player_id})
+    if not player_entry:
+        raise HTTPException(status_code=404, detail="Player not found on leaderboard")
+    
+    # Count players with higher scores
+    higher_scores = await db.leaderboard.count_documents({
+        "total_evidence": {"$gt": player_entry["total_evidence"]}
+    })
+    
+    rank = higher_scores + 1
+    total_players = await db.leaderboard.count_documents({})
+    
+    return {
+        "player_id": player_id,
+        "rank": rank,
+        "total_players": total_players,
+        "total_evidence": player_entry["total_evidence"],
+        "percentile": round((total_players - rank + 1) / total_players * 100, 2)
+    }
+
+# Game Statistics
+@api_router.get("/stats/global")
+async def get_global_stats():
+    """Get global game statistics"""
+    total_players = await db.game_saves.count_documents({})
+    
+    # Aggregate statistics
+    pipeline = [
+        {
+            "$group": {
+                "_id": None,
+                "total_evidence": {"$sum": "$total_evidence"},
+                "total_clicks": {"$sum": "$click_count"},
+                "avg_evidence": {"$avg": "$total_evidence"},
+                "max_evidence": {"$max": "$total_evidence"}
+            }
+        }
+    ]
+    
+    result = await db.game_saves.aggregate(pipeline).to_list(1)
+    stats = result[0] if result else {
+        "total_evidence": 0,
+        "total_clicks": 0,
+        "avg_evidence": 0,
+        "max_evidence": 0
+    }
+    
+    stats["total_players"] = total_players
+    stats.pop("_id", None)
+    
+    return stats
+
+# Basic health check
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Conspiracy Clicker API is running", "status": "operational"}
 
-@api_router.post("/status", response_model=StatusCheck)
-async def create_status_check(input: StatusCheckCreate):
-    status_dict = input.dict()
-    status_obj = StatusCheck(**status_dict)
-    _ = await db.status_checks.insert_one(status_obj.dict())
-    return status_obj
-
-@api_router.get("/status", response_model=List[StatusCheck])
-async def get_status_checks():
-    status_checks = await db.status_checks.find().to_list(1000)
-    return [StatusCheck(**status_check) for status_check in status_checks]
+@api_router.get("/health")
+async def health_check():
+    try:
+        # Test database connection
+        await db.command("ping")
+        return {"status": "healthy", "database": "connected"}
+    except Exception as e:
+        return {"status": "unhealthy", "error": str(e)}
 
 # Include the router in the main app
 app.include_router(api_router)
