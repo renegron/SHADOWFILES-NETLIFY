@@ -161,6 +161,7 @@ function App() {
       achievements,
       lastSave: Date.now()
     };
+    console.log("Saving game data:", saveData);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
   }, [evidence, totalEvidence, clickCount, upgrades, achievements]);
 
