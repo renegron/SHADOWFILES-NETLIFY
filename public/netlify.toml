@@ -1,6 +1,8 @@
 [build]
   publish = "."
   
+# No build command needed - pure HTML/CSS/JS
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
