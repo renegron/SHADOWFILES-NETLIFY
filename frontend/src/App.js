@@ -1425,7 +1425,7 @@ function App() {
                   const isActive = item.type === "boost" && activeBoosts[item.id] && activeBoosts[item.id] > Date.now();
 
                   return (
-                    <Card key={item.id} className={`store-card ${purchased ? 'purchased' : ''}`}>
+                    <Card key={item.id} className={`store-card ${purchased ? 'purchased' : ''} ${item.type === 'evidence' ? 'evidence-vault' : ''}`}>
                       <CardContent className="store-content">
                         <div className="store-icon">
                           <Icon />
