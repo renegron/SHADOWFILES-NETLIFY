@@ -1,0 +1,11 @@
+# Netlify redirects for React Router
+/*    /index.html   200
+
+# API redirects (if needed)
+/api/*  https://shadow-files-backend-production.up.railway.app/api/:splat  200
+
+# Security headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer-when-downgrade
