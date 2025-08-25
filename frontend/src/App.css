@@ -895,6 +895,35 @@ body {
   border-color: rgba(231, 76, 60, 0.4);
 }
 
+.secret-item.level-4 {
+  border-color: rgba(155, 89, 182, 0.4);
+}
+
+.secret-item.level-5 {
+  border-color: rgba(52, 152, 219, 0.4);
+}
+
+.secret-item.level-6 {
+  border-color: rgba(26, 188, 156, 0.4);
+}
+
+.secret-item.level-7 {
+  border-color: rgba(241, 196, 15, 0.4);
+}
+
+.secret-item.level-8 {
+  border-color: rgba(192, 57, 43, 0.4);
+}
+
+.secret-item.level-9 {
+  border-color: rgba(142, 68, 173, 0.4);
+}
+
+.secret-item.level-10 {
+  border-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
 .secret-item.unlocked.level-1 {
   border-color: rgba(46, 204, 113, 0.8);
   background: rgba(46, 204, 113, 0.1);
@@ -908,6 +937,42 @@ body {
 .secret-item.unlocked.level-3 {
   border-color: rgba(231, 76, 60, 0.8);
   background: rgba(231, 76, 60, 0.1);
+}
+
+.secret-item.unlocked.level-4 {
+  border-color: rgba(155, 89, 182, 0.8);
+  background: rgba(155, 89, 182, 0.1);
+}
+
+.secret-item.unlocked.level-5 {
+  border-color: rgba(52, 152, 219, 0.8);
+  background: rgba(52, 152, 219, 0.1);
+}
+
+.secret-item.unlocked.level-6 {
+  border-color: rgba(26, 188, 156, 0.8);
+  background: rgba(26, 188, 156, 0.1);
+}
+
+.secret-item.unlocked.level-7 {
+  border-color: rgba(241, 196, 15, 0.8);
+  background: rgba(241, 196, 15, 0.1);
+}
+
+.secret-item.unlocked.level-8 {
+  border-color: rgba(192, 57, 43, 0.8);
+  background: rgba(192, 57, 43, 0.1);
+}
+
+.secret-item.unlocked.level-9 {
+  border-color: rgba(142, 68, 173, 0.8);
+  background: rgba(142, 68, 173, 0.1);
+}
+
+.secret-item.unlocked.level-10 {
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
 }
 
 .secret-header {
