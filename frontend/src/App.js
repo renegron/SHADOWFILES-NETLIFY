@@ -1470,7 +1470,7 @@ function App() {
                                 <Badge className="active-boost">
                                   Active: {formatTime(activeBoosts[item.id] - Date.now())}
                                 </Badge>
-                              ) : (item.type === "boost" || item.type === "evidence") ? (
+                              ) : (item.type === "boost" || item.type === "evidence" || item.type === "ultimate") ? (
                                 <Button 
                                   onClick={() => mockPurchase(item.id)}
                                   className="store-button"
