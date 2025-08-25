@@ -1515,10 +1515,10 @@ function App() {
                   );
                 })}
                 
-                <Card className="demo-notice">
+                <Card className="paypal-notice">
                   <CardContent className="demo-content">
-                    <h3>🚀 Demo Mode</h3>
-                    <p>This is a demonstration of the monetization features. In the live version, these purchases will use real PayPal payments.</p>
+                    <h3>💳 Real PayPal Payments</h3>
+                    <p>All payments are processed securely through PayPal. Click any PayPal button above to make a real purchase!</p>
                   </CardContent>
                 </Card>
               </TabsContent>
