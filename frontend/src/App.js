@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { toast } from "sonner";
 import { Toaster } from "./components/ui/sonner";
 
-const STORAGE_KEY = "conspiracy_clicker_save";
+const STORAGE_KEY = "shadow_files_save";
 
 const UPGRADES = [
   {
