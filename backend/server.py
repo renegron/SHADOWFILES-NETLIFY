@@ -22,6 +22,14 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# PayPal Configuration
+paypal_client_id = os.environ.get('PAYPAL_CLIENT_ID')
+paypal_client_secret = os.environ.get('PAYPAL_CLIENT_SECRET')
+
+# Use Sandbox for development, Live for production
+environment = SandboxEnvironment(client_id=paypal_client_id, client_secret=paypal_client_secret)
+paypal_client = PayPalHttpClient(environment)
+
 # Create the main app without a prefix
 app = FastAPI()
 
