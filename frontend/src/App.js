@@ -1489,12 +1489,13 @@ function App() {
                                   Active: {formatTime(activeBoosts[item.id] - Date.now())}
                                 </Badge>
                               ) : (item.type === "boost" || item.type === "evidence" || item.type === "ultimate") ? (
-                                <Button 
-                                  onClick={() => mockPurchase(item.id)}
-                                  className="store-button"
-                                >
-                                  Buy {item.type === "evidence" ? "Again" : "Again"} - ${item.price}
-                                </Button>
+                                <div className="paypal-button-container">
+                                  <PayPalButton
+                                    item={item}
+                                    onSuccess={handlePayPalSuccess}
+                                    onError={handlePayPalError}
+                                  />
+                                </div>
                               ) : (
                                 <Badge className="purchased-badge">Owned</Badge>
                               )}
