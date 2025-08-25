@@ -1458,6 +1458,7 @@ function App() {
                         <div className="store-icon">
                           <Icon />
                           {item.type === "premium" && <Crown className="premium-icon" />}
+                          {item.type === "ultimate" && <Crown className="premium-icon" style={{color: '#f1c40f'}} />}
                         </div>
                         <div className="store-info">
                           <h3>{item.name}</h3>
