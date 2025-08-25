@@ -1608,6 +1608,18 @@ function App() {
         <footer className="game-footer">
           <div className="footer-content">
             <p>&copy; 2025 Shadow Files. All Rights Reserved.</p>
+            <div className="footer-social">
+              <a 
+                href="https://x.com/ShadowFilesGame" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-x-link"
+                title="Follow @ShadowFilesGame on X"
+              >
+                <Twitter className="footer-x-icon" />
+                <span>@ShadowFilesGame</span>
+              </a>
+            </div>
           </div>
         </footer>
       </div>
