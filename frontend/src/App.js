@@ -761,6 +761,66 @@ function App() {
     }
   };
 
+  const handlePayPalSuccess = (item) => {
+    // Mark as purchased
+    setPurchases(prev => ({ ...prev, [item.id]: true }));
+    
+    // Apply item effects
+    switch (item.type) {
+      case "cosmetic":
+        if (item.id === "secret_agent_skin") {
+          setCurrentSkin("secret_agent");
+          toast(`🎨 ${item.name} purchased! Clandestine operative mode activated!`);
+        } else if (item.id === "moon_man_skin") {
+          setCurrentSkin("moon_man");
+          toast(`🌙 ${item.name} purchased! Lunar conspiracy mode activated!`);
+        }
+        break;
+      case "boost":
+        setActiveBoosts(prev => ({ 
+          ...prev, 
+          [item.id]: Date.now() + item.duration 
+        }));
+        toast(`⚡ ${item.name} activated! Double evidence for 24 hours!`);
+        break;
+      case "premium":
+        // Premium also activates alien theme
+        setCurrentSkin("alien");
+        toast(`⭐ Welcome to Premium! Enjoy ad-free experience, exclusive upgrades, and alien theme!`);
+        break;
+      case "evidence":
+        // Add evidence directly to the player's total
+        setEvidence(prev => prev + item.evidenceAmount);
+        setTotalEvidence(prev => prev + item.evidenceAmount);
+        toast(`💰 ${item.name} purchased! +${formatNumber(item.evidenceAmount)} evidence added to your investigation!`);
+        break;
+      case "ultimate":
+        // Ultimate vault: Give massive evidence + unlock all cosmetics + premium
+        setEvidence(prev => prev + item.evidenceAmount);
+        setTotalEvidence(prev => prev + item.evidenceAmount);
+        
+        // Unlock all cosmetic skins and premium
+        setPurchases(prev => ({ 
+          ...prev, 
+          secret_agent_skin: true,
+          moon_man_skin: true,
+          premium_version: true
+        }));
+        
+        // Set to alien theme (premium)
+        setCurrentSkin("alien");
+        
+        // Show epic completion message
+        toast(`🎆 ULTIMATE VAULT UNLOCKED! You now have access to EVERYTHING: ${formatNumber(item.evidenceAmount)} evidence, all skins, and premium features!`);
+        break;
+    }
+  };
+
+  const handlePayPalError = (error) => {
+    console.error("PayPal payment error:", error);
+    toast.error("Payment failed. Please try again.");
+  };
+
   const mockPurchase = (itemId) => {
     const item = STORE_ITEMS.find(i => i.id === itemId);
     
@@ -768,56 +828,7 @@ function App() {
     toast("Processing payment...");
     
     setTimeout(() => {
-      setPurchases(prev => ({ ...prev, [itemId]: true }));
-      
-      switch (item.type) {
-        case "cosmetic":
-          if (itemId === "secret_agent_skin") {
-            setCurrentSkin("secret_agent");
-            toast(`🎨 ${item.name} purchased! Clandestine operative mode activated!`);
-          } else if (itemId === "moon_man_skin") {
-            setCurrentSkin("moon_man");
-            toast(`🌙 ${item.name} purchased! Lunar conspiracy mode activated!`);
-          }
-          break;
-        case "boost":
-          setActiveBoosts(prev => ({ 
-            ...prev, 
-            [itemId]: Date.now() + item.duration 
-          }));
-          toast(`⚡ ${item.name} activated! Double evidence for 24 hours!`);
-          break;
-        case "premium":
-          // Premium also activates alien theme
-          setCurrentSkin("alien");
-          toast(`⭐ Welcome to Premium! Enjoy ad-free experience, exclusive upgrades, and alien theme!`);
-          break;
-        case "evidence":
-          // Add evidence directly to the player's total
-          setEvidence(prev => prev + item.evidenceAmount);
-          setTotalEvidence(prev => prev + item.evidenceAmount);
-          toast(`💰 ${item.name} purchased! +${formatNumber(item.evidenceAmount)} evidence added to your investigation!`);
-          break;
-        case "ultimate":
-          // Ultimate vault: Give massive evidence + unlock all cosmetics + premium
-          setEvidence(prev => prev + item.evidenceAmount);
-          setTotalEvidence(prev => prev + item.evidenceAmount);
-          
-          // Unlock all cosmetic skins and premium
-          setPurchases(prev => ({ 
-            ...prev, 
-            secret_agent_skin: true,
-            moon_man_skin: true,
-            premium_version: true
-          }));
-          
-          // Set to alien theme (premium)
-          setCurrentSkin("alien");
-          
-          // Show epic completion message
-          toast(`🎆 ULTIMATE VAULT UNLOCKED! You now have access to EVERYTHING: ${formatNumber(item.evidenceAmount)} evidence, all skins, and premium features!`);
-          break;
-      }
+      handlePayPalSuccess(item);
     }, 1500);
   };
 
