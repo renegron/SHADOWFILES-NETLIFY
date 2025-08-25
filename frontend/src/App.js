@@ -425,6 +425,42 @@ const STORE_ITEMS = [
     price: 6.99,
     type: "premium",
     icon: Star
+  },
+  {
+    id: "evidence_vault_small",
+    name: "Evidence Vault 50K",
+    description: "Instantly gain 50,000 evidence points to accelerate your investigation",
+    price: 15.00,
+    type: "evidence",
+    evidenceAmount: 50000,
+    icon: Vault
+  },
+  {
+    id: "evidence_vault_medium",
+    name: "Evidence Vault 150K",
+    description: "Instantly gain 150,000 evidence points to uncover deeper secrets",
+    price: 25.00,
+    type: "evidence",
+    evidenceAmount: 150000,
+    icon: Vault
+  },
+  {
+    id: "evidence_vault_large",
+    name: "Evidence Vault 500K",
+    description: "Instantly gain 500,000 evidence points to access high-level conspiracies",
+    price: 50.00,
+    type: "evidence",
+    evidenceAmount: 500000,
+    icon: Vault
+  },
+  {
+    id: "evidence_vault_mega",
+    name: "Evidence Vault 1.5M",
+    description: "Instantly gain 1,500,000 evidence points to unlock the ultimate truths",
+    price: 100.00,
+    type: "evidence",
+    evidenceAmount: 1500000,
+    icon: Vault
   }
 ];
 
