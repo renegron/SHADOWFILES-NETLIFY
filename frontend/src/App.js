@@ -781,6 +781,12 @@ function App() {
           setCurrentSkin("alien");
           toast(`⭐ Welcome to Premium! Enjoy ad-free experience, exclusive upgrades, and alien theme!`);
           break;
+        case "evidence":
+          // Add evidence directly to the player's total
+          setEvidence(prev => prev + item.evidenceAmount);
+          setTotalEvidence(prev => prev + item.evidenceAmount);
+          toast(`💰 ${item.name} purchased! +${formatNumber(item.evidenceAmount)} evidence added to your investigation!`);
+          break;
       }
     }, 1500);
   };
