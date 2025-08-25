@@ -1,0 +1,11 @@
+# This is a pure HTML/CSS/JS game
+# No build artifacts or dependencies to ignore
+
+# Optional: Local testing
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
