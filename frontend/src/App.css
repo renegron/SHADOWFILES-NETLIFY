@@ -1861,3 +1861,62 @@ body {
   color: #00ff00;
   text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
+
+/* Theme-specific X button styling */
+.secret-agent-theme .x-social-button {
+  background: rgba(18, 18, 18, 0.9);
+  border-color: rgba(128, 128, 128, 0.6);
+}
+
+.secret-agent-theme .x-social-button:hover {
+  background: rgba(64, 64, 64, 0.3);
+  border-color: rgba(128, 128, 128, 1);
+}
+
+.secret-agent-theme .x-icon {
+  color: #d0d0d0;
+}
+
+.moon-man-theme .x-social-button {
+  background: rgba(30, 58, 95, 0.8);
+  border-color: rgba(173, 216, 230, 0.6);
+}
+
+.moon-man-theme .x-social-button:hover {
+  background: rgba(173, 216, 230, 0.2);
+  border-color: rgba(173, 216, 230, 1);
+}
+
+.moon-man-theme .x-icon {
+  color: #add8e6;
+}
+
+.alien-theme .x-social-button {
+  background: rgba(10, 46, 10, 0.8);
+  border-color: rgba(0, 255, 0, 0.6);
+}
+
+.alien-theme .x-social-button:hover {
+  background: rgba(0, 255, 0, 0.1);
+  border-color: rgba(0, 255, 0, 1);
+}
+
+.alien-theme .x-icon {
+  color: #00ff00;
+}
+
+.alien-theme .footer-x-link {
+  background: rgba(0, 255, 0, 0.1);
+  border-color: rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+}
+
+.alien-theme .footer-x-link:hover {
+  background: rgba(0, 255, 0, 0.2);
+  border-color: rgba(0, 255, 0, 0.6);
+}
+
+.alien-theme .footer-x-icon,
+.alien-theme .footer-x-link span {
+  color: #00ff00;
+}
