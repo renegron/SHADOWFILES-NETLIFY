@@ -370,13 +370,26 @@ const CONSPIRACY_STORIES = [
 const ACHIEVEMENTS = [
   { id: "first_click", name: "First Click", description: "Click once", requirement: 1, type: "clicks" },
   { id: "hundred_clicks", name: "Investigator", description: "Click 100 times", requirement: 100, type: "clicks" },
+  { id: "thousand_clicks", name: "Dedicated Researcher", description: "Click 1,000 times", requirement: 1000, type: "clicks" },
+  { id: "ten_thousand_clicks", name: "Obsessive Investigator", description: "Click 10,000 times", requirement: 10000, type: "clicks" },
   { id: "thousand_evidence", name: "Truth Seeker", description: "Gather 1,000 evidence", requirement: 1000, type: "evidence" },
   { id: "ten_thousand_evidence", name: "Conspiracy Expert", description: "Gather 10,000 evidence", requirement: 10000, type: "evidence" },
+  { id: "million_evidence", name: "Truth Master", description: "Gather 1,000,000 evidence", requirement: 1000000, type: "evidence" },
+  { id: "billion_evidence", name: "Reality Hacker", description: "Gather 1,000,000,000 evidence", requirement: 1000000000, type: "evidence" },
   { id: "first_upgrade", name: "Equipped", description: "Buy your first upgrade", requirement: 1, type: "upgrades" },
+  { id: "ten_upgrades", name: "Well Equipped", description: "Own 10 total upgrades", requirement: 10, type: "upgrades" },
   { id: "premium_user", name: "Elite Agent", description: "Purchase premium version", requirement: 1, type: "premium" },
   { id: "first_secret", name: "Truth Revealer", description: "Unlock your first conspiracy secret", requirement: 1, type: "secrets" },
   { id: "deep_secrets", name: "Deep Truth Seeker", description: "Unlock a Level 2 conspiracy", requirement: 1, type: "level2_secrets" },
-  { id: "ultimate_truth", name: "Ultimate Truth Keeper", description: "Unlock a Level 3 conspiracy", requirement: 1, type: "level3_secrets" }
+  { id: "ultimate_truth", name: "Ultimate Truth Keeper", description: "Unlock a Level 3 conspiracy", requirement: 1, type: "level3_secrets" },
+  { id: "cosmic_truth", name: "Cosmic Investigator", description: "Unlock a Level 4 conspiracy", requirement: 1, type: "level4_secrets" },
+  { id: "dimensional_truth", name: "Dimensional Explorer", description: "Unlock a Level 5 conspiracy", requirement: 1, type: "level5_secrets" },
+  { id: "galactic_truth", name: "Galactic Researcher", description: "Unlock a Level 6 conspiracy", requirement: 1, type: "level6_secrets" },
+  { id: "universal_truth", name: "Universal Scholar", description: "Unlock a Level 7 conspiracy", requirement: 1, type: "level7_secrets" },
+  { id: "horror_truth", name: "Cosmic Horror Witness", description: "Unlock a Level 8 conspiracy", requirement: 1, type: "level8_secrets" },
+  { id: "existential_truth", name: "Existential Detective", description: "Unlock a Level 9 conspiracy", requirement: 1, type: "level9_secrets" },
+  { id: "final_truth", name: "The Final Investigator", description: "Unlock a Level 10 conspiracy - The Ultimate Truth", requirement: 1, type: "level10_secrets" },
+  { id: "complete_truth", name: "Master of All Truths", description: "Unlock all 30 conspiracy secrets", requirement: 30, type: "secrets" }
 ];
 
 const STORE_ITEMS = [
