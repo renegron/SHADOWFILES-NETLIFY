@@ -656,6 +656,40 @@ body {
   filter: drop-shadow(0 0 10px rgba(241, 196, 15, 0.8));
 }
 
+/* X Social Button in Header */
+.x-social-button {
+  margin-left: 20px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(29, 161, 242, 0.6);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.x-social-button:hover {
+  background: rgba(29, 161, 242, 0.1);
+  border-color: rgba(29, 161, 242, 1);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(29, 161, 242, 0.5);
+}
+
+.x-icon {
+  width: 24px;
+  height: 24px;
+  color: #1da1f2;
+  filter: drop-shadow(0 0 8px rgba(29, 161, 242, 0.6));
+}
+
+.x-social-button:hover .x-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 0 12px rgba(29, 161, 242, 0.8));
+}
+
 .game-subtitle {
   font-size: 1.2rem;
   color: #b0b0b0;
