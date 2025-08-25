@@ -858,7 +858,7 @@ function App() {
             <div className="title-section">
               <h1 className="game-title">
                 <Eye className="title-icon" />
-                CONSPIRACY CLICKER
+                SHADOW FILES
                 {purchases.premium_version && <Crown className="premium-crown" />}
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
