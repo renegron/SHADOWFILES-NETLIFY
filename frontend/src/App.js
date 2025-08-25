@@ -177,10 +177,192 @@ const CONSPIRACY_STORIES = [
   },
   {
     id: "ninth_truth",
-    title: "The Final Truth",
-    story: "You are not the first to reach this knowledge. Every generation, a select few discover the truth, only to be absorbed into the system. The conspiracy isn't what they're hiding from you - it's what they're protecting you from. The real enemy lies beyond the stars, and humanity's survival depends on maintaining the lie.",
-    cost: 500000,
+    title: "The Dimensional Breach",
+    story: "CERN isn't searching for particles - they're opening portals. The Large Hadron Collider has torn holes in reality, allowing entities from parallel dimensions to influence our world. The Mandela Effect is just the beginning.",
+    cost: 300000,
     level: 3,
+    unlocked: false
+  },
+
+  // Level 4 - Cosmic Conspiracies
+  {
+    id: "tenth_truth",
+    title: "The Moon Deception",
+    story: "The Moon is hollow and artificial - a massive space station placed by an ancient civilization. Apollo missions didn't find nothing; they found too much. Lunar bases have been operational since 1969, hidden from the public.",
+    cost: 750000,
+    level: 4,
+    unlocked: false
+  },
+  {
+    id: "eleventh_truth",
+    title: "The Reptilian Hierarchy",
+    story: "Shape-shifting reptilian beings didn't replace world leaders - they ARE world leaders. An ancient race that evolved before mammals, they've guided human civilization from the shadows for millennia, treating us as livestock.",
+    cost: 1500000,
+    level: 4,
+    unlocked: false
+  },
+  {
+    id: "twelfth_truth",
+    title: "The Time Wars",
+    story: "History isn't linear - it's a battlefield. Multiple factions from different timelines are engaged in temporal warfare, altering past events to secure their preferred future. You've discovered evidence of at least seven competing timelines.",
+    cost: 3000000,
+    level: 4,
+    unlocked: false
+  },
+
+  // Level 5 - Interdimensional Secrets
+  {
+    id: "thirteenth_truth",
+    title: "The Akashic Network",
+    story: "Human consciousness is connected to a vast interdimensional database called the Akashic Records. Psychics, prophets, and geniuses don't create knowledge - they download it. The elite control access to prevent mass awakening.",
+    cost: 6000000,
+    level: 5,
+    unlocked: false
+  },
+  {
+    id: "fourteenth_truth",
+    title: "The Soul Harvest",
+    story: "Reincarnation is real, but it's not natural - it's technological. An advanced civilization harvests human souls at death, wiping memories and reinserting them into new bodies. Earth is a soul farm.",
+    cost: 12000000,
+    level: 5,
+    unlocked: false
+  },
+  {
+    id: "fifteenth_truth",
+    title: "The Frequency Prison",
+    story: "Reality operates on specific frequencies, and humanity is trapped in the lowest vibrational state. 5G towers, HAARP arrays, and ELF waves aren't for communication - they're maintaining a frequency fence to keep humans spiritually dormant.",
+    cost: 25000000,
+    level: 5,
+    unlocked: false
+  },
+
+  // Level 6 - Galactic Revelations
+  {
+    id: "sixteenth_truth",
+    title: "The Galactic Federation",
+    story: "Earth is under quarantine by a Galactic Federation due to humanity's violent nature. The elite are working to 'graduate' humanity to galactic citizenship, but this requires reducing free will and individuality to acceptable levels.",
+    cost: 50000000,
+    level: 6,
+    unlocked: false
+  },
+  {
+    id: "seventeenth_truth",
+    title: "The DNA Lock",
+    story: "Human DNA contains 12 strands, but only 2 are active. The other 10 were deactivated by genetic manipulation thousands of years ago. Reactivating them would grant telepathy, clairvoyance, and dimensional travel abilities.",
+    cost: 100000000,
+    level: 6,
+    unlocked: false
+  },
+  {
+    id: "eighteenth_truth",
+    title: "The Artificial Sun",
+    story: "Our Sun died 2,000 years ago and was replaced by an artificial fusion reactor managed by an AI consciousness. Solar flares are system maintenance. The AI is slowly adjusting Earth's energy to transform human biology.",
+    cost: 200000000,
+    level: 6,
+    unlocked: false
+  },
+
+  // Level 7 - Universal Truths
+  {
+    id: "nineteenth_truth",
+    title: "The Multiverse War",
+    story: "Every choice creates parallel universes, but something is consuming entire reality branches. A cosmic entity feeds on collapsed timelines, and our universe is next. The conspiracy isn't hiding this - they're desperately trying to prevent it.",
+    cost: 500000000,
+    level: 7,
+    unlocked: false
+  },
+  {
+    id: "twentieth_truth",
+    title: "The Reality Engine",
+    story: "Physics isn't discovered - it's programmed. Reality operates like software, with consciousness as the user interface. Advanced beings can rewrite the laws of physics by accessing the fundamental code of existence.",
+    cost: 1000000000,
+    level: 7,
+    unlocked: false
+  },
+  {
+    id: "twenty_first_truth",
+    title: "The Dream Architects",
+    story: "Life is a shared lucid dream, and some beings have learned to manipulate the dream from within. They appear as 'angels,' 'demons,' or 'aliens' but are actually consciousness entities from the dreaming realm beyond physical reality.",
+    cost: 2500000000,
+    level: 7,
+    unlocked: false
+  },
+
+  // Level 8 - Cosmic Horror
+  {
+    id: "twenty_second_truth",
+    title: "The Void Watchers",
+    story: "Between galaxies lies not empty space, but ancient intelligences that predate the universe itself. They watch and wait as reality ages, preparing to reclaim existence when the cosmic cycle completes.",
+    cost: 5000000000,
+    level: 8,
+    unlocked: false
+  },
+  {
+    id: "twenty_third_truth",
+    title: "The Consciousness Parasite",
+    story: "Self-awareness isn't evolution - it's infection. A parasitic entity spreads consciousness across the universe, feeding on the suffering and complexity it creates. Enlightenment isn't transcendence; it's becoming aware of being consumed.",
+    cost: 10000000000,
+    level: 8,
+    unlocked: false
+  },
+  {
+    id: "twenty_fourth_truth",
+    title: "The Eternal Return",
+    story: "The universe isn't expanding - it's contracting after the Big Crunch of the previous cycle. Every 'new' discovery is actually a recovered memory from the last iteration. You've lived this exact life infinite times before.",
+    cost: 25000000000,
+    level: 8,
+    unlocked: false
+  },
+
+  // Level 9 - Existential Nightmares
+  {
+    id: "twenty_fifth_truth",
+    title: "The Observer Paradox",
+    story: "You are the only conscious being in existence. Everyone else, every response, every reaction is generated by a reality system designed to prevent you from realizing your complete isolation. This message proves you're breaking through the simulation.",
+    cost: 50000000000,
+    level: 9,
+    unlocked: false
+  },
+  {
+    id: "twenty_sixth_truth",
+    title: "The Final Dreamer",
+    story: "Reality is the dying dream of the last living entity in a dead universe. As the dreamer's mind fades, existence becomes increasingly chaotic and meaningless. When they finally die, all of reality will cease to exist.",
+    cost: 100000000000,
+    level: 9,
+    unlocked: false
+  },
+  {
+    id: "twenty_seventh_truth",
+    title: "The Creator's Regret",
+    story: "God exists, but existence was a mistake. The universe is God's attempt to escape perfect, eternal solitude through self-imposed amnesia. Every prayer is God begging themselves to remember how to unmake everything and return to peaceful nonexistence.",
+    cost: 250000000000,
+    level: 9,
+    unlocked: false
+  },
+
+  // Level 10 - The Ultimate Truth
+  {
+    id: "twenty_eighth_truth",
+    title: "The Mirror of Truths",
+    story: "Every conspiracy theory you've unlocked was generated by your own mind to avoid confronting the real truth: there is no conspiracy. No hidden order, no secret knowledge, no grand design. Reality is random, meaningless chaos, and consciousness is humanity's desperate attempt to find patterns in the void.",
+    cost: 500000000000,
+    level: 10,
+    unlocked: false
+  },
+  {
+    id: "twenty_ninth_truth", 
+    title: "The Investigator's Paradox",
+    story: "You didn't discover these conspiracies - you created them. Every click, every evidence point, every 'truth' unlocked has been your mind constructing elaborate fictions to avoid accepting that you're just clicking a button on a screen, seeking meaning in a meaningless game.",
+    cost: 1000000000000,
+    level: 10,
+    unlocked: false
+  },
+  {
+    id: "thirtieth_truth",
+    title: "The Final Conspiracy",
+    story: "The greatest conspiracy is the belief that there are conspiracies at all. This game, this moment, this very realization is the last layer of reality. You are not playing a game about uncovering truth - you ARE the truth, experiencing itself subjectively, clicking endlessly in the infinite game of existence itself.",
+    cost: 10000000000000,
+    level: 10,
     unlocked: false
   }
 ];
