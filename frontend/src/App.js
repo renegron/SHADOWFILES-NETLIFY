@@ -592,6 +592,48 @@ function App() {
               return story && story.level === 3;
             }).length;
             break;
+          case "level4_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 4;
+            }).length;
+            break;
+          case "level5_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 5;
+            }).length;
+            break;
+          case "level6_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 6;
+            }).length;
+            break;
+          case "level7_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 7;
+            }).length;
+            break;
+          case "level8_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 8;
+            }).length;
+            break;
+          case "level9_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 9;
+            }).length;
+            break;
+          case "level10_secrets":
+            progress = Object.keys(unlockedStories).filter(id => {
+              const story = CONSPIRACY_STORIES.find(s => s.id === id);
+              return story && story.level === 10;
+            }).length;
+            break;
         }
         
         if (progress >= achievement.requirement) {
