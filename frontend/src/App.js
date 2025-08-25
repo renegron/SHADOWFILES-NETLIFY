@@ -10,6 +10,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./components/ui/select";
 import { toast } from "sonner";
 import { Toaster } from "./components/ui/sonner";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import PayPalButton from "./components/PayPalButton";
 
 const STORAGE_KEY = "shadow_files_save";
 
