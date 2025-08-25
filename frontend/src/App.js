@@ -1504,6 +1504,13 @@ function App() {
             </Tabs>
           </div>
         </main>
+
+        {/* Footer */}
+        <footer className="game-footer">
+          <div className="footer-content">
+            <p>&copy; 2025 Shadow Files. All Rights Reserved.</p>
+          </div>
+        </footer>
       </div>
     </div>
   );
