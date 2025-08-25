@@ -679,9 +679,9 @@ body {
 }
 
 .alien-badge {
-  background: linear-gradient(135deg, #8a2be2 0%, #9370db 100%);
+  background: linear-gradient(135deg, #006600 0%, #00aa00 100%);
   color: #fff;
-  box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
 }
 
 /* Skin Selector */
