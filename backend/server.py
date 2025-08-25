@@ -242,10 +242,99 @@ async def get_global_stats():
     
     return stats
 
+# PayPal Payment Endpoints
+@api_router.post("/payments/create-order")
+async def create_payment_order(payment_order: PaymentOrder):
+    """Create PayPal payment order"""
+    try:
+        request = OrdersCreateRequest()
+        request.prefer('return=representation')
+        
+        request.request_body = {
+            "intent": "CAPTURE",
+            "purchase_units": [{
+                "reference_id": payment_order.item_id,
+                "description": payment_order.item_name,
+                "amount": {
+                    "currency_code": payment_order.currency_code,
+                    "value": f"{payment_order.amount:.2f}"
+                }
+            }],
+            "application_context": {
+                "brand_name": "Shadow Files",
+                "landing_page": "BILLING",
+                "user_action": "PAY_NOW",
+                "return_url": "https://clicker-mysteries.preview.emergentagent.com/payment-success",
+                "cancel_url": "https://clicker-mysteries.preview.emergentagent.com/payment-cancel"
+            }
+        }
+        
+        response = paypal_client.execute(request)
+        
+        # Store payment record
+        payment_record = PaymentRecord(
+            order_id=response.result.id,
+            item_id=payment_order.item_id,
+            item_name=payment_order.item_name,
+            amount=payment_order.amount,
+            currency_code=payment_order.currency_code,
+            status=response.result.status
+        )
+        
+        await db.payments.insert_one(prepare_for_mongo(payment_record.dict()))
+        
+        return {
+            "order_id": response.result.id,
+            "status": response.result.status,
+            "links": response.result.links
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Payment order creation failed: {str(e)}")
+
+@api_router.post("/payments/capture-order")
+async def capture_payment_order(payment_capture: PaymentCapture):
+    """Capture PayPal payment order"""
+    try:
+        request = OrdersCaptureRequest(payment_capture.order_id)
+        response = paypal_client.execute(request)
+        
+        # Update payment record
+        await db.payments.update_one(
+            {"order_id": payment_capture.order_id},
+            {"$set": {
+                "status": response.result.status,
+                "timestamp": datetime.now(timezone.utc)
+            }}
+        )
+        
+        return {
+            "order_id": response.result.id,
+            "status": response.result.status,
+            "purchase_units": response.result.purchase_units
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Payment capture failed: {str(e)}")
+
+@api_router.get("/payments/verify/{order_id}")
+async def verify_payment(order_id: str):
+    """Verify payment status"""
+    payment = await db.payments.find_one({"order_id": order_id})
+    if not payment:
+        raise HTTPException(status_code=404, detail="Payment not found")
+    
+    return {
+        "order_id": order_id,
+        "item_id": payment["item_id"],
+        "status": payment["status"],
+        "verified": payment.get("status") == "COMPLETED"
+    }
+
 # Basic health check
 @api_router.get("/")
 async def root():
-    return {"message": "Conspiracy Clicker API is running", "status": "operational"}
+    return {"message": "Shadow Files API is running", "status": "operational"}
 
 @api_router.get("/health")
 async def health_check():
