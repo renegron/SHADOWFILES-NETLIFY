@@ -1601,6 +1601,7 @@ function App() {
         </footer>
       </div>
     </div>
+    </PayPalScriptProvider>
   );
 }
 
