@@ -1442,12 +1442,12 @@ function App() {
                                 <Badge className="active-boost">
                                   Active: {formatTime(activeBoosts[item.id] - Date.now())}
                                 </Badge>
-                              ) : item.type === "boost" ? (
+                              ) : (item.type === "boost" || item.type === "evidence") ? (
                                 <Button 
                                   onClick={() => mockPurchase(item.id)}
                                   className="store-button"
                                 >
-                                  Buy Again - ${item.price}
+                                  Buy {item.type === "evidence" ? "Again" : "Again"} - ${item.price}
                                 </Button>
                               ) : (
                                 <Badge className="purchased-badge">Owned</Badge>
