@@ -947,6 +947,15 @@ function App() {
                 <Eye className="title-icon" />
                 SHADOW FILES
                 {purchases.premium_version && <Crown className="premium-crown" />}
+                <a 
+                  href="https://x.com/ShadowFilesGame" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="x-social-button"
+                  title="Follow @ShadowFilesGame on X"
+                >
+                  <Twitter className="x-icon" />
+                </a>
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
               {currentSkin !== "default" && (
