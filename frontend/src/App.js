@@ -1500,12 +1500,13 @@ function App() {
                               )}
                             </div>
                           ) : (
-                            <Button
-                              onClick={() => mockPurchase(item.id)}
-                              className="store-button"
-                            >
-                              Buy - ${item.price}
-                            </Button>
+                            <div className="paypal-button-container">
+                              <PayPalButton
+                                item={item}
+                                onSuccess={handlePayPalSuccess}
+                                onError={handlePayPalError}
+                              />
+                            </div>
                           )}
                         </div>
                       </CardContent>
