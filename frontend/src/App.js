@@ -461,6 +461,15 @@ const STORE_ITEMS = [
     type: "evidence",
     evidenceAmount: 1500000,
     icon: Vault
+  },
+  {
+    id: "evidence_vault_ultimate",
+    name: "Ultimate Evidence Vault",
+    description: "COMPLETE EDITION: Unlock ALL secrets, gain 50 trillion evidence, plus ALL cosmetic skins and premium features",
+    price: 500.00,
+    type: "ultimate",
+    evidenceAmount: 50000000000000, // 50 trillion evidence
+    icon: Gem
   }
 ];
 
