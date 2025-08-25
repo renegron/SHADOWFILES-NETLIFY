@@ -796,6 +796,25 @@ function App() {
           setTotalEvidence(prev => prev + item.evidenceAmount);
           toast(`💰 ${item.name} purchased! +${formatNumber(item.evidenceAmount)} evidence added to your investigation!`);
           break;
+        case "ultimate":
+          // Ultimate vault: Give massive evidence + unlock all cosmetics + premium
+          setEvidence(prev => prev + item.evidenceAmount);
+          setTotalEvidence(prev => prev + item.evidenceAmount);
+          
+          // Unlock all cosmetic skins and premium
+          setPurchases(prev => ({ 
+            ...prev, 
+            secret_agent_skin: true,
+            moon_man_skin: true,
+            premium_version: true
+          }));
+          
+          // Set to alien theme (premium)
+          setCurrentSkin("alien");
+          
+          // Show epic completion message
+          toast(`🎆 ULTIMATE VAULT UNLOCKED! You now have access to EVERYTHING: ${formatNumber(item.evidenceAmount)} evidence, all skins, and premium features!`);
+          break;
       }
     }, 1500);
   };
