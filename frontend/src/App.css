@@ -1379,6 +1379,20 @@ body {
   background: rgba(26, 26, 46, 0.8);
 }
 
+.store-card.evidence-vault {
+  border-color: rgba(52, 152, 219, 0.6);
+  background: rgba(26, 26, 46, 0.6);
+}
+
+.store-card.evidence-vault:hover {
+  border-color: rgba(52, 152, 219, 0.8);
+  box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+}
+
+.evidence-vault .store-icon svg {
+  color: #3498db;
+}
+
 .store-content {
   padding: 20px;
   text-align: center;
