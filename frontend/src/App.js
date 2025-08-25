@@ -899,7 +899,11 @@ function App() {
   };
 
   return (
-    <div className={`conspiracy-game ${getSkinClass()}`}>
+    <PayPalScriptProvider options={{ 
+      "client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID,
+      currency: "USD"
+    }}>
+      <div className={`conspiracy-game ${getSkinClass()}`}>
       <div className="background-effects">
         {/* Moon Man background effects */}
         {currentSkin === "moon_man" && (
