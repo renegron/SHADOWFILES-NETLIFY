@@ -1766,6 +1766,9 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .footer-content p {
@@ -1773,6 +1776,61 @@ body {
   font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.5px;
+  margin: 0;
+}
+
+/* Footer Social Links */
+.footer-social {
+  display: flex;
+  align-items: center;
+}
+
+.footer-x-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(29, 161, 242, 0.1);
+  border: 1px solid rgba(29, 161, 242, 0.3);
+  border-radius: 20px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  color: #1da1f2;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.footer-x-link:hover {
+  background: rgba(29, 161, 242, 0.2);
+  border-color: rgba(29, 161, 242, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+}
+
+.footer-x-icon {
+  width: 16px;
+  height: 16px;
+  color: #1da1f2;
+}
+
+.footer-x-link span {
+  color: #1da1f2;
+}
+
+.footer-x-link:hover span {
+  color: #ffffff;
+}
+
+.footer-x-link:hover .footer-x-icon {
+  color: #ffffff;
+}
+
+/* Responsive footer */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
 
 /* Theme-specific footer styling */
