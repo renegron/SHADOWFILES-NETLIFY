@@ -1393,6 +1393,76 @@ body {
   color: #3498db;
 }
 
+.store-card.ultimate-vault {
+  border: 3px solid rgba(241, 196, 15, 0.8);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(46, 26, 26, 0.8) 100%);
+  box-shadow: 0 0 30px rgba(241, 196, 15, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.store-card.ultimate-vault:hover {
+  border-color: rgba(241, 196, 15, 1);
+  box-shadow: 0 20px 60px rgba(241, 196, 15, 0.7);
+  transform: translateY(-8px) scale(1.02);
+}
+
+.store-card.ultimate-vault::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.2), transparent);
+  animation: ultimateShine 3s infinite;
+}
+
+.ultimate-vault .store-icon svg {
+  color: #f1c40f;
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0 0 15px rgba(241, 196, 15, 0.8));
+}
+
+.ultimate-vault .store-info h3 {
+  color: #f1c40f;
+  text-shadow: 0 0 10px rgba(241, 196, 15, 0.8);
+  font-size: 1.3rem;
+}
+
+.ultimate-vault .price {
+  font-size: 1.8rem;
+  color: #f1c40f;
+  text-shadow: 0 0 15px rgba(241, 196, 15, 0.8);
+  animation: ultimatePulse 2s ease-in-out infinite alternate;
+}
+
+.ultimate-vault .store-button {
+  background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+  color: #000;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 0 20px rgba(241, 196, 15, 0.6);
+  border: 2px solid rgba(241, 196, 15, 0.8);
+}
+
+.ultimate-vault .store-button:hover {
+  background: linear-gradient(135deg, #f39c12 0%, #d35400 100%);
+  box-shadow: 0 0 30px rgba(241, 196, 15, 0.9);
+  transform: translateY(-3px);
+}
+
+@keyframes ultimateShine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+@keyframes ultimatePulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
 .store-content {
   padding: 20px;
   text-align: center;
