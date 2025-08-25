@@ -1022,6 +1022,230 @@ function App() {
                           );
                         })}
                       </div>
+
+                      {/* Level 4 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 4 - Cosmic Conspiracies</h3>
+                        {getStoriesByLevel(4).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-4 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Cosmic truths beyond earthly comprehension await...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-4-button"
+                                  >
+                                    {canAfford ? "Unlock Cosmic Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 5 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 5 - Interdimensional Secrets</h3>
+                        {getStoriesByLevel(5).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-5 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Interdimensional knowledge transcends reality itself...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-5-button"
+                                  >
+                                    {canAfford ? "Unlock Dimensional Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 6 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 6 - Galactic Revelations</h3>
+                        {getStoriesByLevel(6).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-6 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Galactic secrets span civilizations across the cosmos...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-6-button"
+                                  >
+                                    {canAfford ? "Unlock Galactic Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 7 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 7 - Universal Truths</h3>
+                        {getStoriesByLevel(7).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-7 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Universal truths challenge the very nature of existence...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-7-button"
+                                  >
+                                    {canAfford ? "Unlock Universal Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 8 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 8 - Cosmic Horror</h3>
+                        {getStoriesByLevel(8).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-8 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Cosmic horrors lurk beyond the boundaries of comprehension...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-8-button"
+                                  >
+                                    {canAfford ? "Unlock Horrific Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 9 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 9 - Existential Nightmares</h3>
+                        {getStoriesByLevel(9).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-9 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>Existential truths that shatter the foundations of reality...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-9-button"
+                                  >
+                                    {canAfford ? "Unlock Nightmare Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Level 10 Secrets */}
+                      <div className="secrets-level">
+                        <h3 className="level-title">Level 10 - The Final Truth</h3>
+                        {getStoriesByLevel(10).map(secret => {
+                          const isUnlocked = unlockedStories[secret.id];
+                          const canAfford = evidence >= secret.cost;
+                          
+                          return (
+                            <div key={secret.id} className={`secret-item level-10 ${isUnlocked ? 'unlocked' : ''}`}>
+                              <div className="secret-header">
+                                <h4>{isUnlocked ? secret.title : "???"}</h4>
+                                <span className="secret-cost">{formatNumber(secret.cost)} evidence</span>
+                              </div>
+                              {isUnlocked ? (
+                                <p className="secret-story">{secret.story}</p>
+                              ) : (
+                                <div className="secret-locked">
+                                  <p>The ultimate truth that ends all truths awaits the worthy...</p>
+                                  <Button 
+                                    onClick={() => unlockSecret(secret.id)}
+                                    disabled={!canAfford}
+                                    className="unlock-button level-10-button"
+                                  >
+                                    {canAfford ? "Unlock The Final Truth" : "Insufficient Evidence"}
+                                  </Button>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </DialogContent>
                 </Dialog>
