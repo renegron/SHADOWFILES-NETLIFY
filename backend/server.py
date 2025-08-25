@@ -77,6 +77,27 @@ class LeaderboardCreate(BaseModel):
     total_evidence: float
     secrets_unlocked: int
 
+# PayPal Payment Models
+class PaymentOrder(BaseModel):
+    item_id: str
+    item_name: str
+    amount: float
+    currency_code: str = "USD"
+
+class PaymentCapture(BaseModel):
+    order_id: str
+
+class PaymentRecord(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    order_id: str
+    item_id: str
+    item_name: str
+    amount: float
+    currency_code: str
+    status: str
+    player_id: Optional[str] = None
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
 # Helper function to prepare data for MongoDB
 def prepare_for_mongo(data):
     if isinstance(data, dict):
