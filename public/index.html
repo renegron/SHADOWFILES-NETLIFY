@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow Files - Uncover the Truth</title>
+    <meta name="description" content="Shadow Files - Uncover dark secrets by spending evidence to reveal conspiracy truths across 10 mind-bending levels">
+    
+    <!-- External Dependencies -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.paypal.com/sdk/js?client-id=AWOqOwJKqb94MVbiEuRSDTHD_JxhwF7Fb9wmRrXIsB00uiHagi_gUIf8sKW3DkOkleDhPBQTax3BDJRi&currency=USD"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app" class="conspiracy-game default-theme">
+        <!-- Toast Container -->
+        <div id="toast-container" class="toast-container"></div>
+
+        <!-- Main Container -->
+        <div class="game-container">
+            <header class="game-header">
+                <h1 class="game-title">
+                    <i data-lucide="eye" class="title-icon"></i>
+                    SHADOW FILES
+                    <span id="premium-crown" class="premium-crown" style="display: none;">
+                        <i data-lucide="crown"></i>
+                    </span>
+                    <a href="https://x.com/ShadowFilesGame" target="_blank" rel="noopener noreferrer" class="x-social-button" title="Follow @ShadowFilesGame on X">
+                        <i data-lucide="twitter" class="x-icon"></i>
+                    </a>
+                </h1>
+                <p class="game-subtitle">Uncover the truth behind the world's greatest conspiracies</p>
+                
+                <!-- Skin Selector -->
+                <div class="skin-selector" id="skin-selector" style="display: none;">
+                    <label for="skin-select">Theme:</label>
+                    <select id="skin-select" class="skin-select">
+                        <option value="default">Default 🔍</option>
+                    </select>
+                </div>
+            </header>
+
+            <main class="game-main">
+                <!-- Left Column: Stats and Tabs -->
+                <div class="left-column">
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Evidence</h3>
+                            <span class="stat-value" id="evidence-count">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Per Click</h3>
+                            <span class="stat-value" id="per-click">1</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Per Second</h3>
+                            <span class="stat-value" id="per-second">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Secrets</h3>
+                            <span class="stat-value" id="secrets-count">0/30</span>
+                        </div>
+                    </div>
+
+                    <!-- Game Tabs -->
+                    <div class="game-tabs">
+                        <div class="tabs">
+                            <button class="tab-button active" data-tab="upgrades">Upgrades</button>
+                            <button class="tab-button" data-tab="store">Store</button>
+                            <button class="tab-button" data-tab="secrets">Secrets</button>
+                            <button class="tab-button" data-tab="achievements">Achievements</button>
+                        </div>
+
+                        <!-- Tab Contents -->
+                        <div class="tab-content">
+                            <!-- Upgrades Tab -->
+                            <div id="upgrades-tab" class="tab-pane active">
+                                <div class="upgrades-grid" id="upgrades-list">
+                                    <!-- Upgrades will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Store Tab -->
+                            <div id="store-tab" class="tab-pane">
+                                <div class="store-grid" id="store-list">
+                                    <!-- Store items will be populated by JavaScript -->
+                                </div>
+                                <div class="paypal-notice">
+                                    <h3>💳 Real PayPal Payments</h3>
+                                    <p>All payments are processed securely through PayPal. Click any PayPal button above to make a real purchase!</p>
+                                </div>
+                            </div>
+
+                            <!-- Secrets Tab -->
+                            <div id="secrets-tab" class="tab-pane">
+                                <div class="secrets-container" id="secrets-list">
+                                    <!-- Secrets will be populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Achievements Tab -->
+                            <div id="achievements-tab" class="tab-pane">
+                                <div class="achievements-grid" id="achievements-list">
+                                    <!-- Achievements will be populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Click Section -->
+                <div class="click-section">
+                    <button id="main-click-button" class="main-click-button">
+                        <i data-lucide="eye" class="click-icon"></i>
+                        <span class="click-text">INVESTIGATE</span>
+                        
+                        <!-- Alien Theme Elements -->
+                        <div class="alien-face" style="display: none;"></div>
+                        <div class="alien-eyes" style="display: none;"></div>
+                        <div class="alien-glow" style="display: none;"></div>
+                    </button>
+
+                    <!-- Theme-specific background elements -->
+                    <div class="theme-background">
+                        <!-- Secret Agent Theme -->
+                        <div class="shadow-grid secret-agent-only"></div>
+                        <div class="scanner-line secret-agent-only"></div>
+                        
+                        <!-- Moon Man Theme -->
+                        <div class="shooting-star moon-man-only"></div>
+                        <div class="shooting-star moon-man-only" style="animation-delay: 2s;"></div>
+                        <div class="planet moon-man-only"></div>
+                        <div class="planet moon-man-only" style="animation-delay: 1s; left: 70%;"></div>
+                        
+                        <!-- Alien Theme -->
+                        <div class="galaxy-spiral alien-only"></div>
+                        <div class="galaxy-arms alien-only"></div>
+                        <div class="nebula-cloud nebula-cloud-1 alien-only"></div>
+                        <div class="nebula-cloud nebula-cloud-2 alien-only"></div>
+                        <div class="nebula-cloud nebula-cloud-3 alien-only"></div>
+                        <div class="flying-ufo alien-only"></div>
+                    </div>
+
+                    <!-- Active Boosts Display -->
+                    <div id="active-boosts" class="active-boosts">
+                        <!-- Boosts will be shown here -->
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="game-footer">
+                <div class="footer-content">
+                    <p>&copy; 2025 Shadow Files. All Rights Reserved.</p>
+                    <div class="footer-social">
+                        <a href="https://x.com/ShadowFilesGame" target="_blank" rel="noopener noreferrer" class="footer-x-link" title="Follow @ShadowFilesGame on X">
+                            <i data-lucide="twitter" class="footer-x-icon"></i>
+                            <span>@ShadowFilesGame</span>
+                        </a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Secret Modal -->
+    <div id="secret-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2 id="secret-title">Secret Details</h2>
+            <div id="secret-story"></div>
+            <div id="secret-actions"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
