@@ -1151,6 +1151,22 @@ function startIdleIncome() {
 
 // Initialization
 document.addEventListener('DOMContentLoaded', function() {
+  // Show disclaimer modal first
+  showDisclaimerModal();
+  
+  // Set up disclaimer acceptance
+  document.getElementById('disclaimer-accept').addEventListener('click', function() {
+    document.getElementById('disclaimer-modal').style.display = 'none';
+    initializeGame();
+  });
+});
+
+function showDisclaimerModal() {
+  const modal = document.getElementById('disclaimer-modal');
+  modal.style.display = 'block';
+}
+
+function initializeGame() {
   // Load game data
   loadGame();
   
@@ -1182,6 +1198,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Show welcome message
   setTimeout(() => {
-    showToast('Welcome to Shadow Files! Click to investigate and uncover the truth.', 'info');
+    showToast('Welcome to Shadow Files! Remember: this is pure fiction and entertainment! 🎮', 'info');
   }, 1000);
-});
+}
