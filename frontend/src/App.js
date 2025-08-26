@@ -492,6 +492,7 @@ function App() {
   const [purchases, setPurchases] = useState({});
   const [activeBoosts, setActiveBoosts] = useState({});
   const [currentSkin, setCurrentSkin] = useState("default");
+  const [showDisclaimerModal, setShowDisclaimerModal] = useState(false);
 
   // Helper function to calculate idle income
   const calculateIdleIncome = (upgradeState) => {
