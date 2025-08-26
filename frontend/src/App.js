@@ -954,7 +954,7 @@ function App() {
                   className="x-social-button"
                   title="Follow @ShadowFilesGame on X"
                 >
-                  <Twitter className="x-icon" />
+                  <X className="x-icon" />
                 </a>
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
