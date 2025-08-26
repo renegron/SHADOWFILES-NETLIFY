@@ -1616,7 +1616,7 @@ function App() {
                 className="footer-x-link"
                 title="Follow @ShadowFilesGame on X"
               >
-                <Twitter className="footer-x-icon" />
+                <X className="footer-x-icon" />
                 <span>@ShadowFilesGame</span>
               </a>
             </div>
