@@ -993,6 +993,11 @@ function App() {
                 </a>
               </h1>
               <p className="game-subtitle">Uncover the truth, one click at a time</p>
+              
+              {/* Enhanced Game Disclaimer */}
+              <div className="game-disclaimer">
+                <p><strong>⚠️ DISCLAIMER:</strong> This is a <strong>fictional entertainment game</strong> featuring satirical conspiracy theories for gameplay purposes only. All content is <strong>parody/fiction</strong> and not intended as factual information. Play responsibly! 🎮</p>
+              </div>
               {currentSkin !== "default" && (
                 <Badge className={`skin-badge ${currentSkin}-badge`}>
                   {currentSkin === "secret_agent" ? "Secret Agent Mode" : 
