@@ -539,6 +539,12 @@ function App() {
     } else {
       console.log("No saved data found");
     }
+
+    // Show disclaimer modal on first visit
+    const hasSeenDisclaimer = localStorage.getItem('shadow_files_disclaimer_seen');
+    if (!hasSeenDisclaimer) {
+      setShowDisclaimerModal(true);
+    }
   }, []);
 
   // Calculate click power and idle income
