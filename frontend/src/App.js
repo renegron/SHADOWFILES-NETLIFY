@@ -951,6 +951,29 @@ function App() {
           }
         }}
       />
+        
+        {/* Disclaimer Modal */}
+        <Dialog open={showDisclaimerModal} onOpenChange={setShowDisclaimerModal}>
+          <DialogContent className="disclaimer-modal">
+            <DialogHeader>
+              <DialogTitle className="disclaimer-title">🎮 Welcome to Shadow Files</DialogTitle>
+              <DialogDescription className="disclaimer-text">
+                <p><strong>📢 IMPORTANT DISCLAIMER:</strong></p>
+                <ul>
+                  <li>✅ <strong>Fictional Entertainment:</strong> This is a satirical clicker game featuring made-up conspiracy theories</li>
+                  <li>✅ <strong>Parody Content:</strong> All "secrets" and "conspiracies" are fictional and created for gameplay entertainment</li>
+                  <li>✅ <strong>Not Factual:</strong> No content should be considered real information or educational material</li>
+                  <li>✅ <strong>Responsible Gaming:</strong> This is pure entertainment - think critically about real-world information</li>
+                  <li>✅ <strong>Age Appropriate:</strong> Suitable for players who understand fiction vs. reality</li>
+                </ul>
+                <p className="disclaimer-footer">By playing, you acknowledge this is <strong>satirical entertainment only</strong>. Have fun investigating fictional conspiracies! 🕵️‍♂️</p>
+              </DialogDescription>
+            </DialogHeader>
+            <Button onClick={handleDisclaimerAccept} className="disclaimer-button">
+              I Understand - Start Game
+            </Button>
+          </DialogContent>
+        </Dialog>
       <div className="game-container">
         <header className="game-header">
           <div className="header-content">
