@@ -817,10 +817,20 @@ function App() {
         // Set to alien theme (premium)
         setCurrentSkin("alien");
         
-        // Show epic completion message
         toast(`🎆 ULTIMATE VAULT UNLOCKED! You now have access to EVERYTHING: ${formatNumber(item.evidenceAmount)} evidence, all skins, and premium features!`);
         break;
     }
+    
+    // Check for achievements after purchase
+    setTimeout(() => {
+      checkAchievements();
+    }, 100);
+  };
+
+  const handleDisclaimerAccept = () => {
+    localStorage.setItem('shadow_files_disclaimer_seen', 'true');
+    setShowDisclaimerModal(false);
+    toast('Welcome to Shadow Files! Remember: this is pure fiction and entertainment! 🎮');
   };
 
   const handlePayPalError = (error) => {
