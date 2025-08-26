@@ -820,11 +820,6 @@ function App() {
         toast(`🎆 ULTIMATE VAULT UNLOCKED! You now have access to EVERYTHING: ${formatNumber(item.evidenceAmount)} evidence, all skins, and premium features!`);
         break;
     }
-    
-    // Check for achievements after purchase
-    setTimeout(() => {
-      checkAchievements();
-    }, 100);
   };
 
   const handleDisclaimerAccept = () => {
