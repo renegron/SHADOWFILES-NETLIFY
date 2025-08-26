@@ -1920,3 +1920,94 @@ body {
 .alien-theme .footer-x-link span {
   color: #00ff00;
 }
+
+/* Game Disclaimer */
+.game-disclaimer {
+  margin: 20px auto;
+  max-width: 800px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 2px solid rgba(255, 193, 7, 0.4);
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+.game-disclaimer p {
+  color: #ffc107;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.game-disclaimer strong {
+  color: #fff;
+}
+
+/* Disclaimer Modal */
+.disclaimer-modal {
+  max-width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: rgba(26, 26, 46, 0.98);
+  border: 3px solid rgba(255, 193, 7, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.disclaimer-title {
+  color: #ffc107;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-family: 'Orbitron', monospace;
+}
+
+.disclaimer-text {
+  color: #e0e0e0;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.disclaimer-text ul {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.disclaimer-text li {
+  margin: 10px 0;
+  padding-left: 10px;
+}
+
+.disclaimer-text strong {
+  color: #ffc107;
+}
+
+.disclaimer-footer {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 8px;
+  padding: 15px;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #ffc107;
+}
+
+.disclaimer-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.disclaimer-button:hover {
+  background: linear-gradient(135deg, #e0a800 0%, #c69500 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.4);
+}
