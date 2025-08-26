@@ -5,7 +5,7 @@ from datetime import datetime
 import uuid
 
 class ConspiracyClickerAPITester:
-    def __init__(self, base_url="https://clicker-mysteries.preview.emergentagent.com/api"):
+    def __init__(self, base_url="https://shadow-files-game.preview.emergentagent.com/api"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

@@ -264,8 +264,8 @@ async def create_payment_order(payment_order: PaymentOrder):
                 "brand_name": "Shadow Files",
                 "landing_page": "BILLING",
                 "user_action": "PAY_NOW",
-                "return_url": "https://clicker-mysteries.preview.emergentagent.com/payment-success",
-                "cancel_url": "https://clicker-mysteries.preview.emergentagent.com/payment-cancel"
+                "return_url": "https://shadow-files-game.preview.emergentagent.com/payment-success",
+                "cancel_url": "https://shadow-files-game.preview.emergentagent.com/payment-cancel"
             }
         }
         
